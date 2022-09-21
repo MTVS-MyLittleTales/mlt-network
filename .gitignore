@@ -34,4 +34,5 @@ build/
 
 ### otcdatabase/
 **/dbconfig.yml
+### otc
 /database/
