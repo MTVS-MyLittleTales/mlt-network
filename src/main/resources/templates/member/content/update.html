@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/layout}">
+
+<th:block layout:fragment="content">
+
+  <div class="outer outer-member-detail">
+    <br>
+    <h2 align="center">회원 정보 수정</h2>
+
+    <form id="joinForm" th:action="@{/member/update}" method="post">
+      <table align="center">
+        <input
+                type="hidden"
+                id="memberId"
+                name="memberId"
+                th:value="${ #authentication.getPrincipal().getMemberId() }"
+        >
+        <tr>
+          <td width="200px">* 아이디 </td>
+          <td><p th:text="${ #authentication.getPrincipal().getMemberId() }"></p></td>
+        </tr>
+        <tr>
+          <td>* 비밀번호</td>
+          <td><input type="password" maxlength="13" name="memberPwd" required></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>* 비밀번호확인</td>
+          <td><input type="password" maxlength="13" name="memberPwd2"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>* 이름</td>
+          <td><input type="text" maxlength="5" name="memberName" required></td>
+          <td></td>
+        </tr>
+      </table>
+      <br>
+      <div class="btns" align="center">
+        <button type="button" class="btn btn-pk" id="goMain">돌아가기</button>
+        <input type="submit" value="수정하기" class="btn btn-or">
+        <input
+                type="button"
+                value="탈퇴하기"
+                class="btn btn-bs"
+                th:onclick="'location.href=\'/member/delete?id='+ @{${ #authentication.getPrincipal().getMemberId() }} + '\''"
+        >
+      </div>
+    </form>
+  </div>
+
+
+</th:block>
+
+</html>
