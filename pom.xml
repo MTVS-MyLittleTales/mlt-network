@@ -75,6 +75,10 @@
             <artifactId>osdt_core</artifactId>
             <version>21.5.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

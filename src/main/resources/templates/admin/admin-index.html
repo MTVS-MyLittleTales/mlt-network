@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/admin-layout}">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+  <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
+</th:block>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+  <!--    <script th:src="@{/js/page/home.js}"></script>-->
+</th:block>
+
+<!-- Content -->
+<div layout:fragment="content">
+
+  <h1>어드민 대시 보드</h1>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">사용자 이용 통계</h5>
+
+        <!-- Bar Chart -->
+        <div id="barChart"></div>
+
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            new ApexCharts(document.querySelector("#barChart"), {
+              series: [{
+                data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+              }],
+              chart: {
+                type: 'bar',
+                height: 350
+              },
+              plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                }
+              },
+              dataLabels: {
+                enabled: false
+              },
+              xaxis: {
+                categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
+                    'United States', 'China', 'Germany'
+                ],
+              }
+            }).render();
+          });
+        </script>
+        <!-- End Bar Chart -->
+
+      </div>
+    </div>
+  </div>
+
+  <form action="/admin/hi" method="post">
+    <button type="submit">전송하기</button>
+  </form>
+</div>
+
+</html>

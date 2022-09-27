@@ -3,7 +3,14 @@ server:
 
 spring:
   datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@mtvsdbserver_high?TNS_ADMIN=/Wallet_mtvsDBServer
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@mtvsdbserver_low?TNS_ADMIN=./src/main/resources/database/Wallet_mtvsDBServer
     username: Mylittletales
     password: mtvsNetwork12
+
+  thymeleaf:
+    prefix:  classpath:templates/
+    suffix: .html
+    cache: false
+mybatis:
+  mapper-locations: /mappers/**/*.xml

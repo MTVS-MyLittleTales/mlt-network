@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.network.mylittletale.admin.model.dao.AdminMapper">
+    <resultMap id="adminMemberDTOResultMap" type="com.network.mylittletale.admin.model.dto.AdminMemberDTO">
+        <id property="memberNo" column="MEMBER_NO" />
+        <result property="memberId" column="MEMBER_ID"/>
+        <result property="memberName" column="MEMBER_NAME"/>
+        <result property="memberRegistDatetime" column="MEMBER_REGIST_DATETIME"/>
+        <result property="memberSecessionYN" column="MEMBER_SECESSION_YN"/>
+        <result property="accSecessionDatetime" column="MEMBER_ROLE"/>
+        <result property="childrenCnt" column="CHILDREN_CNT"/>
+    </resultMap>
+    <resultMap id="taleDTOResultMap" type="com.network.mylittletale.admin.model.dto.AdminTaleDTO">
+        <id property="taleNo" column="TALE_NO" />
+        <result property="createdDate" column="CREATED_DATE"/>
+        <result property="lastViewedDate" column="LAST_VIEWED_DATE"/>
+        <result property="isDelete" column="LAST_VIEWED_DATE"/>
+        <result property="childNo" column="CHILD_NO"/>
+    </resultMap>
+
+    <select id="findMemberList" resultMap="adminMemberDTOResultMap">
+        SELECT
+               A.MEMBER_NO
+             , A.MEMBER_ID
+             , A.MEMBER_NAME
+             , A.MEMBER_REGIST_DATETIME
+             , A.MEMBER_SECESSION_DATETIME
+             , A.MEMBER_SECESSION_YN
+             , (SELECT COUNT(*)
+                  FROM TBL_CHILDREN B
+                 WHERE B.MEMBER_NO = A.MEMBER_NO
+               ) as "CHILDREN_CNT"
+          FROM TBL_MEMBER A
+         WHERE A.MEMBER_ROLE = 'ROLE_MEMBER'
+    </select>
+
+    <select id="findTaleList" resultMap="taleDTOResultMap">
+        SELECT
+               A.TALE_NO
+             , A.CREATED_DATE
+             , A.LAST_VIEWED_DATE
+             , A.IS_DELETE
+             , A.CHILD_NO
+          FROM TBL_CREATED_TALE A
+    </select>
+
+
+</mapper>
