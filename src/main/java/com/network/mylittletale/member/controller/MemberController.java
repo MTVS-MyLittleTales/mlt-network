@@ -17,8 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 @Controller
 @RequestMapping("/member")
@@ -88,11 +86,12 @@ public class MemberController {
     public String goLoginFail() {
 
         System.out.println("로그인 실패!");
-        return "member/errors/login";
+        return "common/errors/error-login";
     }
 
     @GetMapping("/update")
     public String goModifyMember() {
+
 
         return "member/content/update";
     }
