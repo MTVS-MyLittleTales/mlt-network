@@ -21,21 +21,20 @@
     <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">아이디</th>
-      <th scope="col">이름</th>
-      <th scope="col">가입일시</th>
-      <th scope="col">탈퇴여부</th>
-      <th scope="col">탈퇴일시</th>
-      <th scope="col">자녀수</th>
+      <th scope="col">생성 일시</th>
+      <th scope="col">최근 조회 일자</th>
+      <th scope="col">삭제 여부</th>
+      <th scope="col">생성 아이디</th>
+      <th scope="col">자녀 명</th>
     </tr>
     <tr th:each="tale : ${taleList}" >
       <th:block th:href="|?taleNo=${tale.taleNo}|">
-      <td th:text="${member.memberId}"/>
-      <td th:text="${member.memberName}"/>
-      <td th:text="${member.memberRegistDatetime}"/>
-      <td th:text="${member.memberSecessionYN}"/>
-      <td th:text="${member.memberSecessionDatetime}"/>
-      <td th:text="${member.childrenCnt}"/>
+      <td th:text="${tale.taleNo}"/>
+      <td th:text="${tale.createdDate}"/>
+      <td th:text="${tale.lastViewedDate}"/>
+      <td th:text="${tale.isDelete}"/>
+        <td th:text="${tale.adminChildrenAndMemberDTO.adminMemberDTO.memberName}"/>
+        <td th:text="${tale.adminChildrenAndMemberDTO.childName}"/>
       </th:block>
     </tr>
     </thead>

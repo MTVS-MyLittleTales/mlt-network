@@ -4,45 +4,21 @@
       layout:decorate="~{common/layouts/layout}">
 
 <th:block layout:fragment="content">
+  <script th:inline="javascript">
+      /*<![CDATA[*/
+
+      let message = [[${message}]];
+
+      if(message != null && message !== '') {
+          alert(message);
+      }
+
+      /*]]>*/
+  </script>
   <!-- Begin Page Content -->
-  <div class="container-fluid">
+    <h1> 메인페이지 </h1>
 
-  </div>
 </th:block>
 
 </html>
 
-
-<script th:inline="javascript">
-  /*<![CDATA[*/
-
-  let message = [[${message}]];
-
-  if(message != null && message !== '') {
-    alert(message);
-  }
-
-  /*]]>*/
-</script>
-
-<!-- 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
-
-<!-- index.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">
-  <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
-</th:block>
-<!-- index.html 고유 스크립트 추가 -->
-<th:block layout:fragment="script">
-  <!--    <script th:src="@{/js/page/home.js}"></script>-->
-</th:block>
-
-<!-- Content -->
-<div layout:fragment="content">
-  <h1>Content</h1>
-</div>
-</html>
--->

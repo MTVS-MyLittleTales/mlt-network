@@ -1,7 +1,7 @@
 package com.network.mylittletale.admin.controller;
 
 import com.network.mylittletale.admin.model.dto.AdminMemberDTO;
-import com.network.mylittletale.admin.model.dto.AdminTaleDTO;
+import com.network.mylittletale.admin.model.dto.AdminTaleAndChildrenDTO;
 import com.network.mylittletale.admin.model.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +29,7 @@ public class AdminController {
 
     @GetMapping("member-list")
     public ModelAndView adminMemberList(ModelAndView mv) {
+
         List<AdminMemberDTO> memberList = adminService.findMemberList();
 
         for (AdminMemberDTO adminMemberDTO : memberList) {
@@ -42,7 +43,7 @@ public class AdminController {
 
     @GetMapping("tale-list")
     public ModelAndView adminTaleList(ModelAndView mv){
-        List<AdminTaleDTO> taleList = adminService.findTaleList();
+        List<AdminTaleAndChildrenDTO> taleList = adminService.findTaleList();
 
         mv.addObject("taleList", taleList);
         mv.setViewName("admin/contents/tale-list");

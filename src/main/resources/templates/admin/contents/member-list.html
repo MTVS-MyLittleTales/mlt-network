@@ -23,10 +23,10 @@
       <th scope="col">#</th>
       <th scope="col">아이디</th>
       <th scope="col">이름</th>
-      <th scope="col">가입일시</th>
-      <th scope="col">자녀수</th>
-      <th scope="col">탈퇴여부</th>
-      <th scope="col">탈퇴일시</th>
+      <th scope="col">가입 일시</th>
+      <th scope="col">등록 자녀수</th>
+      <th scope="col">탈퇴 여부</th>
+      <th scope="col">탈퇴 일시</th>
     </tr>
       <tr th:each="member : ${memberList}" th:href="|?memberNo=${member.memberNo}|">
         <td th:text="${member.memberNo}"/>

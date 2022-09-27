@@ -2,7 +2,7 @@ package com.network.mylittletale.admin.model.service;
 
 import com.network.mylittletale.admin.model.dao.AdminMapper;
 import com.network.mylittletale.admin.model.dto.AdminMemberDTO;
-import com.network.mylittletale.admin.model.dto.AdminTaleDTO;
+import com.network.mylittletale.admin.model.dto.AdminTaleAndChildrenDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<AdminTaleDTO> findTaleList() {
+    public List<AdminTaleAndChildrenDTO> findTaleList() {
         return mapper.findTaleList();
     }
 
