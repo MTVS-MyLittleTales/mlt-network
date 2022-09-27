@@ -1,10 +1,10 @@
-package com.network.mylittletale.member.service;
+package com.network.mylittletale.member.model.service;
 
 import com.network.mylittletale.common.exception.member.MemberModifyException;
 import com.network.mylittletale.common.exception.member.MemberRegistException;
 import com.network.mylittletale.common.exception.member.MemberRemoveException;
-import com.network.mylittletale.member.dao.MemberMapper;
-import com.network.mylittletale.member.dto.MemberDTO;
+import com.network.mylittletale.member.model.dao.MemberMapper;
+import com.network.mylittletale.member.model.dto.MemberDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +28,9 @@ public class MemberService {
 
         int result = mapper.insertMember(member);
 
-        if(!(result > 0)){
-            throw new MemberRegistException("회원 가입에 실패하셨습니다.");
-        }
+//        if(!(result > 0)){
+//            throw new MemberRegistException("회원 가입에 실패하셨습니다.");
+//        }
 
     }
 

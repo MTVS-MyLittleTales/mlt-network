@@ -1,4 +1,4 @@
-package com.network.mylittletale.member.dto;
+package com.network.mylittletale.member.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;

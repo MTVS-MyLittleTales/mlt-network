@@ -1,6 +1,6 @@
 package com.network.mylittletale.common.exception.member;
 
-public class MemberRegistException extends Exception {
+public class MemberRegistException extends Throwable {
 
     public MemberRegistException() {}
 

@@ -5,8 +5,8 @@ import com.network.mylittletale.common.exception.member.MemberModifyException;
 import com.network.mylittletale.common.exception.member.MemberRegistException;
 import com.network.mylittletale.common.exception.member.MemberRemoveException;
 import com.network.mylittletale.common.util.SessionUtil;
-import com.network.mylittletale.member.dto.MemberDTO;
-import com.network.mylittletale.member.service.MemberService;
+import com.network.mylittletale.member.model.dto.MemberDTO;
+import com.network.mylittletale.member.model.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,6 +44,10 @@ public class MemberController {
 
         member.setMemberPwd(passwordEncoder.encode(member.getMemberPwd()));
 
+        boolean checkedId = memberService.selectMemberById(member.getMemberId());
+        if(checkedId) {
+            throw new MemberRegistException("회원가입에 실패하였습니다. 중복된 아이디입니다.");
+        }
         System.out.println("[MemberController] registMember request Member : " + member);
         memberService.registMember(member);
 

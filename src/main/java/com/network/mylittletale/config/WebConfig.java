@@ -12,8 +12,5 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/templates/", "classpath:/static/", "classpath:/database/");
 
-//        // 이미지 불러올수 있도록 세팅
-//        registry.addResourceHandler("/upload/**")
-//                .addResourceLocations("classpath:/upload/");
     }
 }

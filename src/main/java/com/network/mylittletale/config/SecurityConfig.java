@@ -1,7 +1,7 @@
 package com.network.mylittletale.config;
 
-import com.network.mylittletale.member.service.AuthenticationService;
-import com.network.mylittletale.member.service.CustomLoginSuccessHandler;
+import com.network.mylittletale.member.model.service.AuthenticationService;
+import com.network.mylittletale.member.model.service.CustomLoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,10 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-
-
-
 
         http
                     .authorizeRequests()
