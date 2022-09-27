@@ -12,13 +12,21 @@
         <result property="accSecessionDatetime" column="MEMBER_ROLE"/>
         <result property="childrenCnt" column="CHILDREN_CNT"/>
     </resultMap>
-    <resultMap id="taleDTOResultMap" type="com.network.mylittletale.admin.model.dto.AdminTaleDTO">
+    <resultMap id="adminChildrenDTO" type="com.network.mylittletale.admin.model.dto.AdminChildrenAndMemberDTO">
+        <id property="childNo" column="CHILD_NO" />
+        <result property="childName" column="CHILD_NAME"/>
+        <result property="childBirth" column="CHILD_BIRTH"/>
+        <result property="childGender" column="CHILD_GENDER"/>
+        <association property="adminMemberDTO" resultMap="adminMemberDTOResultMap"/>
+    </resultMap>
+    <resultMap id="admintaleDTOResultMap" type="com.network.mylittletale.admin.model.dto.AdminTaleAndChildrenDTO">
         <id property="taleNo" column="TALE_NO" />
         <result property="createdDate" column="CREATED_DATE"/>
         <result property="lastViewedDate" column="LAST_VIEWED_DATE"/>
         <result property="isDelete" column="LAST_VIEWED_DATE"/>
-        <result property="childNo" column="CHILD_NO"/>
+        <association property="adminChildrenAndMemberDTO" resultMap="adminChildrenDTO"/>
     </resultMap>
+
 
     <select id="findMemberList" resultMap="adminMemberDTOResultMap">
         SELECT
@@ -34,16 +42,29 @@
                ) as "CHILDREN_CNT"
           FROM TBL_MEMBER A
          WHERE A.MEMBER_ROLE = 'ROLE_MEMBER'
+         ORDER BY A.MEMBER_NO ASC
     </select>
 
-    <select id="findTaleList" resultMap="taleDTOResultMap">
+    <select id="findTaleList" resultMap="admintaleDTOResultMap">
         SELECT
                A.TALE_NO
              , A.CREATED_DATE
              , A.LAST_VIEWED_DATE
              , A.IS_DELETE
-             , A.CHILD_NO
+             , B.CHILD_NO
+             , B.CHILD_NAME
+             , B.CHILD_BIRTH
+             , B.CHILD_GENDER
+             , C.MEMBER_NO
+             , C.MEMBER_ID
+             , C.MEMBER_PWD
+             , C.MEMBER_NAME
+             , C.MEMBER_REGIST_DATETIME
+             , C.MEMBER_SECESSION_DATETIME
+             , C.MEMBER_SECESSION_YN
           FROM TBL_CREATED_TALE A
+          JOIN TBL_CHILDREN B ON(A.CHILD_NO = B.CHILD_NO)
+          JOIN TBL_MEMBER C ON(B.MEMBER_NO = C.MEMBER_NO)
     </select>
 
 

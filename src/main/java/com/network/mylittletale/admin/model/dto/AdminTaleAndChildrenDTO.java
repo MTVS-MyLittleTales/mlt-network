@@ -2,22 +2,22 @@ package com.network.mylittletale.admin.model.dto;
 
 import java.sql.Date;
 
-public class AdminTaleDTO {
+public class AdminTaleAndChildrenDTO {
     private String taleNo;
     private java.sql.Date createdDate;
     private java.sql.Date lastViewedDate;
     private char isDelete;
-    private int childNo;
+    private AdminChildrenAndMemberDTO adminChildrenAndMemberDTO;
 
-    public AdminTaleDTO() {
+    public AdminTaleAndChildrenDTO() {
     }
 
-    public AdminTaleDTO(String taleNo, Date createdDate, Date lastViewedDate, char isDelete, int childNo) {
+    public AdminTaleAndChildrenDTO(String taleNo, Date createdDate, Date lastViewedDate, char isDelete, AdminChildrenAndMemberDTO adminChildrenAndMemberDTO) {
         this.taleNo = taleNo;
         this.createdDate = createdDate;
         this.lastViewedDate = lastViewedDate;
         this.isDelete = isDelete;
-        this.childNo = childNo;
+        this.adminChildrenAndMemberDTO = adminChildrenAndMemberDTO;
     }
 
     public String getTaleNo() {
@@ -52,22 +52,22 @@ public class AdminTaleDTO {
         this.isDelete = isDelete;
     }
 
-    public int getChildNo() {
-        return childNo;
+    public AdminChildrenAndMemberDTO getAdminChildrenAndMemberDTO() {
+        return adminChildrenAndMemberDTO;
     }
 
-    public void setChildNo(int childNo) {
-        this.childNo = childNo;
+    public void setAdminChildrenAndMemberDTO(AdminChildrenAndMemberDTO adminChildrenAndMemberDTO) {
+        this.adminChildrenAndMemberDTO = adminChildrenAndMemberDTO;
     }
 
     @Override
     public String toString() {
-        return "AdminTaleDTO{" +
+        return "AdminTaleAndChildrenDTO{" +
                 "taleNo='" + taleNo + '\'' +
                 ", createdDate=" + createdDate +
                 ", lastViewedDate=" + lastViewedDate +
                 ", isDelete=" + isDelete +
-                ", childNo=" + childNo +
+                ", adminChildrenAndMemberDTO=" + adminChildrenAndMemberDTO +
                 '}';
     }
 }
