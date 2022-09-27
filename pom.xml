@@ -117,8 +117,10 @@
             <groupId>com.oracle.database.security</groupId>
             <artifactId>osdt_core</artifactId>
         </dependency>
-
-
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency
     </dependencies>
 
     <build>

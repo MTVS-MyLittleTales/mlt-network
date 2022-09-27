@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layouts/admin-layout}">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+  <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
+</th:block>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+  <!--    <script th:src="@{/js/page/home.js}"></script>-->
+</th:block>
+
+<!-- Content -->
+<div layout:fragment="content">
+
+  <h1>동화 전체 목록 조회</h1>
+  <table class="table  ">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">아이디</th>
+      <th scope="col">이름</th>
+      <th scope="col">가입일시</th>
+      <th scope="col">탈퇴여부</th>
+      <th scope="col">탈퇴일시</th>
+      <th scope="col">자녀수</th>
+    </tr>
+    <tr th:each="tale : ${taleList}" >
+      <th:block th:href="|?taleNo=${tale.taleNo}|">
+      <td th:text="${member.memberId}"/>
+      <td th:text="${member.memberName}"/>
+      <td th:text="${member.memberRegistDatetime}"/>
+      <td th:text="${member.memberSecessionYN}"/>
+      <td th:text="${member.memberSecessionDatetime}"/>
+      <td th:text="${member.childrenCnt}"/>
+      </th:block>
+    </tr>
+    </thead>
+  </table>
+
+</div>
+
+</html>
