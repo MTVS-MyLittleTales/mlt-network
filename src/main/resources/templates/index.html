@@ -4,23 +4,21 @@
       layout:decorate="~{common/layouts/layout}">
 
 <th:block layout:fragment="content">
-  <!-- Begin Page Content -->
-  <div class="container-fluid">
+  <script th:inline="javascript">
+      /*<![CDATA[*/
 
-  </div>
+      let message = [[${message}]];
+
+      if(message != null && message !== '') {
+          alert(message);
+      }
+
+      /*]]>*/
+  </script>
+  <!-- Begin Page Content -->
+    <h1> 메인페이지 </h1>
+
 </th:block>
 
 </html>
 
-
-<script th:inline="javascript">
-  /*<![CDATA[*/
-
-  let message = [[${message}]];
-
-  if(message != null && message !== '') {
-    alert(message);
-  }
-
-  /*]]>*/
-</script>

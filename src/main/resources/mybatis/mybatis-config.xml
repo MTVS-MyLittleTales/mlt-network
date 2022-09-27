@@ -16,6 +16,7 @@
     <mappers>
         <mapper resource="MemberMapper.xml"/>
         <mapper resource="TaleMapper.xml"/>
+        <mapper resource="AdminMapper.xml"/>
     </mappers>
 
 </configuration>

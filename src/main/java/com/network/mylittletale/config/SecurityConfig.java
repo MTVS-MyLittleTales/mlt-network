@@ -1,6 +1,7 @@
 package com.network.mylittletale.config;
 
 import com.network.mylittletale.member.service.AuthenticationService;
+import com.network.mylittletale.member.service.CustomLoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
@@ -21,10 +21,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationService authenticationService;
 
+    private CustomLoginSuccessHandler customLoginSuccessHandler;
 
     @Autowired
-    public SecurityConfig(AuthenticationService authenticationService) {
+    public SecurityConfig(AuthenticationService authenticationService, CustomLoginSuccessHandler customLoginSuccessHandler) {
         this.authenticationService = authenticationService;
+        this.customLoginSuccessHandler = customLoginSuccessHandler;
     }
 
     @Bean
@@ -46,9 +48,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+
+
+
+
         http
                     .authorizeRequests()
                     .mvcMatchers( "/tale/**").hasAnyAuthority("ROLE_MEMBER", "ROLE_ADMIN")
+                    .mvcMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
                     .mvcMatchers("/**", "/member/**").permitAll()
                 .and()
                     .csrf().disable();
@@ -56,7 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                     .formLogin()
                     .loginPage("/member/login")
-                    .defaultSuccessUrl("/")
+                    .successHandler(customLoginSuccessHandler)
+//                    .defaultSuccessUrl("/")
                     .failureUrl("/member/loginfail")
                     .usernameParameter("memberId")
                     .passwordParameter("memberPwd")
