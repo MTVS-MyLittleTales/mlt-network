@@ -51,7 +51,7 @@ public class TaleController {
     public String createTale() {
 
         System.out.println("동화 만들러 가기!");
-        return("content/tale/create");
+        return("tale/create");
     }
 
     @GetMapping("/list")

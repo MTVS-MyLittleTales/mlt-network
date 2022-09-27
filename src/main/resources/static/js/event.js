@@ -51,24 +51,4 @@ window.onload = function() {
         }
     }
 
-    // if(document.getElementById("writeNotice")) {
-    //     const $writeNotice = document.getElementById("writeNotice");
-    //     $writeNotice.onclick = function() {
-    //         location.href = "/notice/regist";
-    //     }
-    // }
-    //
-    // if(document.getElementById("writeBoard")) {
-    //     const $writeBoard = document.getElementById("writeBoard");
-    //     $writeBoard.onclick = function() {
-    //         location.href = "/board/regist";
-    //     }
-    // }
-    //
-    // if(document.getElementById("writeThumbnail")) {
-    //     const $writeThumbnail = document.getElementById("writeThumbnail");
-    //     $writeThumbnail.onclick = function() {
-    //         location.href = "/thumbnail/regist";
-    //     }
-    // }
 }
