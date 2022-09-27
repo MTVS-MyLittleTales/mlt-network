@@ -58,7 +58,7 @@ public class TaleController {
     public String goTaleList() {
 
         System.out.println("동화 만들러 가기!");
-        return("content/tale/list");
+        return("tale/list");
     }
 }
 

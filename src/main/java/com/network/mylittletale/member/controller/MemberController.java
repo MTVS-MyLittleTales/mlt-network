@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 @Controller
 @RequestMapping("/member")
@@ -33,7 +35,7 @@ public class MemberController {
 
     @GetMapping("/regist")
     public String goRegister() {
-        return "content/member/regist";
+        return "member/content/regist";
     }
 
     @PostMapping("/regist")
@@ -79,20 +81,20 @@ public class MemberController {
     public String goLogin() {
 
         System.out.println("로그인 화면");
-        return "content/member/login";
+        return "member/content/login";
     }
 
     @GetMapping("/loginfail")
     public String goLoginFail() {
 
         System.out.println("로그인 실패!");
-        return "errors/login";
+        return "member/errors/login";
     }
 
     @GetMapping("/update")
     public String goModifyMember() {
 
-        return "content/member/update";
+        return "member/content/update";
     }
 
     @PostMapping("/update")
@@ -114,8 +116,11 @@ public class MemberController {
     public String deleteMember(@ModelAttribute MemberDTO member, SessionStatus status,
                                RedirectAttributes rttr, HttpServletRequest request, HttpServletResponse response) throws MemberRemoveException {
 
+//        SimpleDateFormat date = new SimpleDateFormat ( "yyyy/MM/dd");
+//        String format_time1 = format1.format (System.currentTimeMillis());
         String memberId = request.getParameter("id");
         member.setMemberId(memberId);
+//        member.setMemberSecessionDatetime();
 
         memberService.removeMember(member);
 
