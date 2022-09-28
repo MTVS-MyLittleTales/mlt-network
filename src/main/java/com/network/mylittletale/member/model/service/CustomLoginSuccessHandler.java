@@ -1,4 +1,4 @@
-package com.network.mylittletale.member.service;
+package com.network.mylittletale.member.model.service;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

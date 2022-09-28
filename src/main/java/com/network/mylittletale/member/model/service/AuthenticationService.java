@@ -1,7 +1,7 @@
-package com.network.mylittletale.member.service;
+package com.network.mylittletale.member.model.service;
 
-import com.network.mylittletale.member.dao.MemberMapper;
-import com.network.mylittletale.member.dto.MemberDTO;
+import com.network.mylittletale.member.model.dao.MemberMapper;
+import com.network.mylittletale.member.model.dto.MemberDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

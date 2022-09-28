@@ -1,6 +1,6 @@
-package com.network.mylittletale.member.dao;
+package com.network.mylittletale.member.model.dao;
 
-import com.network.mylittletale.member.dto.MemberDTO;
+import com.network.mylittletale.member.model.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
