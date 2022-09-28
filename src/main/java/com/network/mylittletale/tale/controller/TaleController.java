@@ -57,8 +57,15 @@ public class TaleController {
     @GetMapping("/list")
     public String goTaleList() {
 
-        System.out.println("동화 만들러 가기!");
+        System.out.println("동화 목록으로 가기!");
         return("tale/list");
+    }
+
+    @GetMapping("/detail")
+    public String goTaleDetail() {
+
+        System.out.println("4컷 동화 보러 가기");
+        return("tale/detail");
     }
 }
 
