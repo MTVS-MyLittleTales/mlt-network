@@ -1,33 +1,19 @@
 package com.network.mylittletale.common.exception.view;
 
-
-import com.network.mylittletale.common.exception.member.MemberModifyException;
 import com.network.mylittletale.common.exception.member.MemberRegistException;
-import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-
-@Controller
-//@RequestMapping("/*")
+@ControllerAdvice
 public class ExceptionController {
 
-
     @ExceptionHandler(MemberRegistException.class)
-    public ModelAndView handleMemberRegistException(ModelAndView mv){
+    public String handleMemberRegistException(Exception e, Model model){
 
-        System.out.println("일로 오나??");
-        mv.setViewName("common/errors/error-regist");
+        model.addAttribute("exception", e);
 
-        return mv;
+        return "common/errors/error-regist";
     }
-//    @ExceptionHandler(MemberRegistException.class)
-//    public String handleMemberRegistException() {
-//
-//        System.out.println("일로 오나??");
-//        return "common/errors/error-regist";
-//    }
 
 }

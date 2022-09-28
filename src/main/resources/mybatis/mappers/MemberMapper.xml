@@ -60,6 +60,7 @@
         UPDATE
                TBL_MEMBER A
            SET A.MEMBER_SECESSION_YN = 'Y'
+             , A.MEMBER_SECESSION_DATETIME = #{memberSecessionDatetime}
          WHERE A.MEMBER_ID = #{memberId}
     </update>
 

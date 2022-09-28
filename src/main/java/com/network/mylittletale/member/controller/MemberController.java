@@ -17,6 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/member")
@@ -45,9 +48,11 @@ public class MemberController {
         member.setMemberPwd(passwordEncoder.encode(member.getMemberPwd()));
 
         boolean checkedId = memberService.selectMemberById(member.getMemberId());
+
         if(checkedId) {
             throw new MemberRegistException("회원가입에 실패하였습니다. 중복된 아이디입니다.");
         }
+
         System.out.println("[MemberController] registMember request Member : " + member);
         memberService.registMember(member);
 
@@ -119,11 +124,12 @@ public class MemberController {
     public String deleteMember(@ModelAttribute MemberDTO member, SessionStatus status,
                                RedirectAttributes rttr, HttpServletRequest request, HttpServletResponse response) throws MemberRemoveException {
 
-//        SimpleDateFormat date = new SimpleDateFormat ( "yyyy/MM/dd");
-//        String format_time1 = format1.format (System.currentTimeMillis());
+        long miliseconds = System.currentTimeMillis();
+        Date date = new Date(miliseconds);
+
         String memberId = request.getParameter("id");
         member.setMemberId(memberId);
-//        member.setMemberSecessionDatetime();
+        member.setMemberSecessionDatetime((date));
 
         memberService.removeMember(member);
 
