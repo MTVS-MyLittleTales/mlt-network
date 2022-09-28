@@ -11,6 +11,7 @@
     <typeAliases>
         <typeAlias alias="MemberDTO" type="com.network.mylittletale.member.model.dto.MemberDTO"/>
         <typeAlias alias="TaleDTO" type="com.network.mylittletale.tale.dto.TaleDTO"/>
+        <typeAlias alias="ChildrenDTO" type="com.network.mylittletale.children.model.dto.ChildrenDTO"/>
     </typeAliases>
 
     <mappers>

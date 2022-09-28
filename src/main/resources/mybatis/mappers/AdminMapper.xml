@@ -23,7 +23,7 @@
         <id property="taleNo" column="TALE_NO" />
         <result property="createdDate" column="CREATED_DATE"/>
         <result property="lastViewedDate" column="LAST_VIEWED_DATE"/>
-        <result property="isDelete" column="LAST_VIEWED_DATE"/>
+        <result property="isDelete" column="IS_DELETE"/>
         <association property="adminChildrenAndMemberDTO" resultMap="adminChildrenDTO"/>
     </resultMap>
 
@@ -65,6 +65,7 @@
           FROM TBL_CREATED_TALE A
           JOIN TBL_CHILDREN B ON(A.CHILD_NO = B.CHILD_NO)
           JOIN TBL_MEMBER C ON(B.MEMBER_NO = C.MEMBER_NO)
+         ORDER BY A.TALE_NO
     </select>
 
 
