@@ -47,18 +47,19 @@
 
 <th:block layout:fragment="content">
 
-    <h3 align="center" style="margin-top: 100px">자녀의 이름을 입력해주세요.</h3>
+    <h2 th:align="center" style="margin-top: 100px; margin-bottom: 50px">이야기를 입력해주세요.</h2>
 
-    <form>
-        <div style="display: flex; justify-content: center; margin-top: 50px" >
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="width: 500px" align="center"></textarea>
-                <label for="floatingTextarea">자녀 이름</label>
-            </div>
+    <div style="display: flex; justify-content: center">
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="story" id="floatingTextarea" style="width: 500px; height: 200px"></textarea>
+            <label for="floatingTextarea">이야기 내용</label>
         </div>
+    </div>
 
-        <div style="display: flex; justify-content: center; margin-top: 50px" >
-            <a class="btn btn-primary" href="#" role="button" onclick="location.href='/tale/get-story'">다음</a>
+    <div style="display: flex; justify-content: center; margin-top: 50px" >
+        <a class="btn btn-primary" href="#" role="button" onclick="location.href='/tale/select-img'">다음</a>
+    </div>
+
 
 </th:block>
 </html>

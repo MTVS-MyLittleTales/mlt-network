@@ -241,6 +241,28 @@ public class TaleController {
         return("tale/create");
     }
 
+    @GetMapping("/get-story")
+    public String getStory() {
+
+        System.out.println("문장을 받아라!");
+        return("tale/get-story");
+    }
+
+    @GetMapping("/select-img")
+    public String selectImg() {
+
+        System.out.println("사진이 마음에 드나!");
+        return("tale/select-img");
+    }
+
+    @GetMapping("/upload-img")
+    public String uploadImg() {
+
+        System.out.println("사진을 업로드 하겠나!");
+        return("tale/upload-img");
+    }
+
+
     @GetMapping("/list")
     public String goTaleList() {
 
@@ -248,31 +270,41 @@ public class TaleController {
         return("tale/list");
     }
 
+    @GetMapping("/final-img")
+    public String showFinalImg() {
+
+        System.out.println("최종 이미지 확인!");
+        return("tale/final-img");
+    }
+
+
     @GetMapping("temp")
     public ModelAndView tempPage(ModelAndView mv){
-        int taleNo = 1;
-        List<CutDataDTO> cutList = taleService.getTales(taleNo);
-        System.out.println("cutList = " + cutList);
-        mv.addObject("firstCut", cutList.get(0));
-        mv.addObject("secondCut", cutList.get(1));
-        mv.addObject("thirdCut", cutList.get(2));
-        mv.addObject("fourthCut", cutList.get(3));
+
+        mv.setViewName("/tale/detail");
 
         return mv;
     }
 
     @GetMapping("result3")
-    public ModelAndView resultPage(ModelAndView mv){
+    public ModelAndView resultPage(ModelAndView mv) {
         mv.setViewName("member/tale/result3");
         return mv;
-
+    }
 
     @GetMapping("/detail")
-    public String goTaleDetail() {
+    public String goTaleDetail(ModelAndView mv) {
+        int taleNo = 1;
+        List<CutDataDTO> cutList = taleService.getTales(taleNo);
+        System.out.println("cutList.get(0) = " + cutList.get(0));
 
+        mv.addObject("firstCut", cutList.get(0));
+        mv.addObject("secondCut", cutList.get(1));
+        mv.addObject("thirdCut", cutList.get(2));
+        mv.addObject("fourthCut", cutList.get(3));
         System.out.println("4컷 동화 보러 가기");
-        return("tale/detail");
 
+        return "tale/detail";
     }
 }
 
