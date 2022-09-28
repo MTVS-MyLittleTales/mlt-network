@@ -52,7 +52,7 @@
              , IMG_NAME
              , CUT_SEQUENCE
           FROM TBL_CUT_DATA
-         WHERE #{taleNo}
+         WHERE TALE_NO = #{taleNo}
          ORDER BY CUT_SEQUENCE
     </select>
 </mapper>
