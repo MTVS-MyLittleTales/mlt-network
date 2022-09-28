@@ -18,14 +18,18 @@
           FROM DUAL
     </select>
 
-    <insert id="insertCutData">
+    <select id="getTaleSequence" resultType="int">
+        SELECT
+               SEQ_TALE_NO.NEXTVAL
+        FROM DUAL
+    </select>
+
+    <insert id="insertCutData" parameterType="com.network.mylittletale.tale.model.dto.CutDataDTO">
         INSERT INTO TBL_CUT_DATA A
         (
           A.CUT_NO
         , A.INPUT_SENTENCE
-<!--        <if test="taleNo != null">-->
-<!--            , A.TALE_NO-->
-<!--        </if>-->
+        , A.TALE_NO
         , A.CUT_SEQUENCE
         , A.IMG_NAME
         , A.MEMBER_YN
@@ -34,16 +38,15 @@
         (
           #{cutNo}
         , #{inputSentence}
-<!--        <if test="taleNo != null">-->
-<!--            , #{taleNo}-->
-<!--        </if>-->
+        , #{taleNo}
         , #{cutSequence}
         , #{imgName}
         , #{memberYN}
         )
     </insert>
+
     <select id="getCutSequence" resultType="int">
-        SELECT LAST_VALUE(CUT_SEQUENCE) FROM TBL_CUT_DATA WHERE = #{taleNo}
+        SELECT MAX(CUT_SEQUENCE) FROM TBL_CUT_DATA WHERE TALE_NO = ${taleNo}
     </select>
     <select id="getTales" resultMap="cutData">
         SELECT
@@ -55,4 +58,28 @@
          WHERE TALE_NO = #{taleNo}
          ORDER BY CUT_SEQUENCE
     </select>
+
+    <update id="updateTaleNo">
+        UPDATE TBL_CUT_DATA
+           SET TALE_NO = #{taleNo}
+         WHERE CUT_NO = #{sequence}
+    </update>
+
+    <insert id="insertTale">
+        INSERT INTO TBL_CREATED_TALE
+        (
+          TALE_NO
+        , CREATED_DATE
+        , IS_DELETE
+        , CHILD_NO
+        )
+        VALUES
+        (
+          ${taleNo}
+        , SYSDATE
+        , 'N'
+        , ${childNo}
+        )
+    </insert>
+
 </mapper>
