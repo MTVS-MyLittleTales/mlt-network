@@ -5,6 +5,8 @@ import org.apache.ibatis.type.Alias;
 import java.util.Date;
 
 public class TaleDTO {
+
+    private int cutNo;
     private int taleNo;
     private String taleName;
     private int memberNo;
@@ -14,12 +16,21 @@ public class TaleDTO {
     public TaleDTO() {
     }
 
-    public TaleDTO(int taleNo, String taleName, int memberNo, Date creationDate, Date lastLookupDate) {
+    public TaleDTO(int cutNo, int taleNo, String taleName, int memberNo, Date creationDate, Date lastLookupDate) {
+        this.cutNo = cutNo;
         this.taleNo = taleNo;
         this.taleName = taleName;
         this.memberNo = memberNo;
         this.creationDate = creationDate;
         this.lastLookupDate = lastLookupDate;
+    }
+
+    public int getCutNo() {
+        return cutNo;
+    }
+
+    public void setCutNo(int cutNo) {
+        this.cutNo = cutNo;
     }
 
     public int getTaleNo() {
@@ -65,7 +76,8 @@ public class TaleDTO {
     @Override
     public String toString() {
         return "TaleDTO{" +
-                "taleNo=" + taleNo +
+                "cutNo=" + cutNo +
+                ", taleNo=" + taleNo +
                 ", taleName='" + taleName + '\'' +
                 ", memberNo=" + memberNo +
                 ", creationDate=" + creationDate +

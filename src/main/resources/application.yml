@@ -34,9 +34,7 @@ spring:
     suffix: .html
     cache: false
     check-template-location: true
-  web:
-    resources:
-      static-locations: classpath:/upload/
+
 
 image:
   image-dir: src/main/resources

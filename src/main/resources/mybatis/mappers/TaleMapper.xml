@@ -3,22 +3,56 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.network.mylittletale.tale.model.dao.TaleMapper">
-    <resultMap id="taleDTOResult" type="com.network.mylittletale.tale.model.dto.TaleDTO">
-        <id property="taleNo" column="TALE_NO"/>
-        <result property="taleName" column="TALE_NAME"/>
-        <result property="memberNo" column="MEMBER_NO"/>
-        <result property="creationDate" column="CREATION_DATE"/>
-        <result property="lastLookupDate" column="LAST_LOOKUP_DATE"/>
+    <resultMap id="cutData" type="com.network.mylittletale.tale.model.dto.CutDataDTO">
+        <id property="cutNo" column="CUT_NO"/>
+        <result property="inputSentence" column="INPUT_SENTENCE"/>
+        <result property="taleNo" column="TALE_NO"/>
+        <result property="cutSequence" column="CUT_SEQUENCE"/>
+        <result property="imgName" column="IMG_NAME"/>
+        <result property="memberYN" column="MEMBER_YN"/>
     </resultMap>
 
-
-    <select id="findTaleList" resultMap="taleDTOResult">
+    <select id="getCutNo" resultType="int">
         SELECT
-               A.TALE_NO
-             , A.TALE_NAME
-             , A.MEMBER_NO
-             , A.CREATION_DATE
-             , A.LAST_LOOKUP_DATE
-          FROM TBL_TALE A
+               SEQ_CUT_NO.NEXTVAL
+          FROM DUAL
+    </select>
+
+    <insert id="insertCutData">
+        INSERT INTO TBL_CUT_DATA A
+        (
+          A.CUT_NO
+        , A.INPUT_SENTENCE
+<!--        <if test="taleNo != null">-->
+<!--            , A.TALE_NO-->
+<!--        </if>-->
+        , A.CUT_SEQUENCE
+        , A.IMG_NAME
+        , A.MEMBER_YN
+        )
+        VALUES
+        (
+          #{cutNo}
+        , #{inputSentence}
+<!--        <if test="taleNo != null">-->
+<!--            , #{taleNo}-->
+<!--        </if>-->
+        , #{cutSequence}
+        , #{imgName}
+        , #{memberYN}
+        )
+    </insert>
+    <select id="getCutSequence" resultType="int">
+        SELECT LAST_VALUE(CUT_SEQUENCE) FROM TBL_CUT_DATA WHERE = #{taleNo}
+    </select>
+    <select id="getTales" resultMap="cutData">
+        SELECT
+               INPUT_SENTENCE
+             , TALE_NO
+             , IMG_NAME
+             , CUT_SEQUENCE
+          FROM TBL_CUT_DATA
+         WHERE #{taleNo}
+         ORDER BY CUT_SEQUENCE
     </select>
 </mapper>

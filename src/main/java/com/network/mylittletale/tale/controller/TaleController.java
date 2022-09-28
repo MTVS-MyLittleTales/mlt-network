@@ -41,7 +41,9 @@ package com.network.mylittletale.tale.controller;
 
 
 import com.network.mylittletale.tale.model.dto.ChildDTO;
+import com.network.mylittletale.tale.model.dto.CutDataDTO;
 import com.network.mylittletale.tale.model.service.TaleService;
+import org.apache.groovy.parser.antlr4.GroovyParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -50,6 +52,8 @@ import org.springframework.boot.ApplicationContextFactory;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
@@ -67,16 +71,15 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Base64;
-import java.util.UUID;
+import java.util.*;
 
 
 @Controller
 @RequestMapping("/tale")
+@CrossOrigin("*")
 public class TaleController {
 
-    int sequence = 0;
-    int taleSequence = 0;
+    private int sequence;
     private TaleService taleService;
     @Autowired
     public TaleController(TaleService taleService) {
@@ -89,18 +92,12 @@ public class TaleController {
         return mv;
     }
 
-//    @GetMapping("getchildinfo")
-//    public ModelAndView askingPage(ModelAndView mv){
-//        mv.setViewName("member/tale/getchildinfo");
-//        return mv;
-//    }
 
-//    @PostMapping("getchildinfo")
-//    public ModelAndView getChildInfo(ModelAndView mv, @ModelAttribute ChildDTO childInfo){
-//        System.out.println(childInfo);
-//        mv.setViewName("member/tale/getimage");
-//        return mv;
-//    }
+    @GetMapping("image")
+    public ModelAndView inputImagePage(ModelAndView mv){
+        mv.setViewName("member/tale/getimage");
+        return mv;
+    }
 
     @GetMapping("result2")
     public ModelAndView imageInputPage(ModelAndView mv){
@@ -114,11 +111,9 @@ public class TaleController {
         return mv;
     }
     @PostMapping("getimage")
-    public synchronized ModelAndView getdInputImage(ModelAndView mv, @RequestParam MultipartFile singFile, RedirectAttributes rttr, HttpSession httpSession) throws IOException {
+    @Transactional
+    public synchronized ModelAndView getdInputImage(ModelAndView mv, @RequestParam MultipartFile singFile, RedirectAttributes rttr, HttpServletResponse res, @AuthenticationPrincipal UserDetails user) throws IOException {
         String imageData = Base64.getEncoder().encodeToString(singFile.getBytes());
-        String path = httpSession.getServletContext().getRealPath("/");
-
-
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -130,40 +125,63 @@ public class TaleController {
         HttpEntity<String> aiResponse = restTemplate.postForEntity(url, requestMessage, String.class);
         JSONParser parser = new JSONParser();
         
-        String filePath = path + "src\\main\\resources\\upload";
+        String filePath = "\\public";
         File file = new File(filePath);
         if(!file.exists()){
             file.mkdirs();
         }
 
+
         try{
             JSONObject data = (JSONObject) parser.parse(aiResponse.getBody());
+            String resultText = (String) data.get("text");
             String resultImage = (String) data.get("image");
             String resultByte = resultImage.replace("\n", "");
 
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(resultByte));
             BufferedImage bufferedImage = ImageIO.read(inputStream);
-        sequence++;
             ImageIO.write(bufferedImage, "png", new File(filePath+"\\result"+ sequence +".png"));
+
+            rttr.addFlashAttribute("imageName", "result"+sequence+".png");
+            mv.setViewName("redirect:/tale/result2");
+            CutDataDTO cutDataDTO = new CutDataDTO();
+            if(user.isEnabled()){
+                int taleNo = 1;
+                cutDataDTO.setCutNo(sequence);
+                cutDataDTO.setInputSentence(resultText);
+                cutDataDTO.setTaleNo(taleNo); //동화번호기입되어야함
+                int cutSequence = taleService.getCutSequence(taleNo)+1;
+                if(cutSequence>4){
+                    cutSequence = 1;
+                }
+                cutDataDTO.setCutSequence(cutSequence);
+                cutDataDTO.setImgName("result"+sequence+".png");
+                cutDataDTO.setMemberYN("Y");
+            }else{
+                cutDataDTO.setCutNo(sequence);
+                cutDataDTO.setInputSentence(resultText);
+                cutDataDTO.setCutSequence(1);
+                cutDataDTO.setImgName("result"+sequence+".png");
+                cutDataDTO.setMemberYN("N");
+                Cookie myCookie = new Cookie("sequnece", sequence+"");
+                res.addCookie(myCookie);
+            }
+            taleService.insertCutData(cutDataDTO);
 
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        if(taleSequence>3){
-            taleSequence = 0;
-        }
-        rttr.addFlashAttribute("resultPath", "/upload/result"+sequence+".png");
-        mv.setViewName("redirect:/tale/result2");
+
+
 
         return mv;
     }
 
     @PostMapping("gettext")
     public ModelAndView getInputText(ModelAndView mv, @RequestParam String content, HttpSession httpSession, RedirectAttributes rttr) {
+        sequence = taleService.getCutNo();
         String url = "http://192.168.0.23:5001/gettext";
-        String path = httpSession.getServletContext().getRealPath("/");
-        System.out.println("path = " + path);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -177,7 +195,7 @@ public class TaleController {
         HttpEntity<String> response = restTemplate.postForEntity(url, requestMessage, String.class);
         JSONParser parser = new JSONParser();
 
-        String filePath = path+"networkRepo\\src\\main\\resources\\upload";
+        String filePath = "\\public";
         File file = new File(filePath);
         if(!file.exists()){
             file.mkdirs();
@@ -197,14 +215,20 @@ public class TaleController {
             e.printStackTrace();
         }
 
-        if(taleSequence>3){
-            taleSequence = 0;
-        }
-
-        rttr.addFlashAttribute("imagePath", "/upload/result"+sequence+".png");
+        rttr.addFlashAttribute("imageName", "result"+sequence+".png");
         mv.setViewName("redirect:/tale/result");
 
         return mv;
+    }
+
+    @GetMapping(value = "img/{fileName}", produces = MediaType.IMAGE_PNG_VALUE)
+    @ResponseBody
+    public byte[] getImage(@PathVariable("fileName") String fileName) throws IOException {
+        System.out.println("getImage");
+        System.out.println("fileName = " + fileName);
+        byte[] resultImage = Files.readAllBytes(new File("\\public\\"+fileName).toPath());
+        System.out.println("resultImage = " + resultImage);
+        return resultImage;
     }
     @GetMapping("result")
     public ModelAndView responseURL(ModelAndView mv){
@@ -225,6 +249,18 @@ public class TaleController {
 
         System.out.println("동화 만들러 가기!");
         return("tale/list");
+    }
+
+    @GetMapping("temp")
+    public ModelAndView tempPage(ModelAndView mv){
+        int taleNo = 1;
+        List<CutDataDTO> cutList = taleService.getTales(taleNo);
+        mv.addObject("firstCut", cutList.get(0));
+        mv.addObject("secondCut", cutList.get(1));
+        mv.addObject("thirdCut", cutList.get(2));
+        mv.addObject("fourthCut", cutList.get(3));
+
+        return mv;
     }
 
 }

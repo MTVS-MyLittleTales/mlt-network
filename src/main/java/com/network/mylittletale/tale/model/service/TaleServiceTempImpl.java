@@ -6,6 +6,7 @@
 package com.network.mylittletale.tale.model.service;
 
 import com.network.mylittletale.tale.model.dao.TaleMapper;
+import com.network.mylittletale.tale.model.dto.CutDataDTO;
 import com.network.mylittletale.tale.model.dto.TaleDTO;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +32,25 @@ public class TaleServiceTempImpl implements TaleService {
     @Override
     public void test() {
         System.out.println(mapper);
+    }
+
+    @Override
+    public int insertCutData(CutDataDTO cutDataDTO) {
+        return mapper.insertCutData(cutDataDTO);
+    }
+
+    @Override
+    public int getCutNo() {
+        return mapper.getCutNo();
+    }
+
+    @Override
+    public int getCutSequence(int taleNo) {
+        return mapper.getCutSequence(taleNo);
+    }
+
+    @Override
+    public List<CutDataDTO> getTales(int taleNo) {
+        return mapper.getTales(taleNo);
     }
 }
