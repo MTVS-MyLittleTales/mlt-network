@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<body>
+<img id="resultImg" th:src="|@{/tale/img/}${imageName}|">
+<h1>배경이 마음에 들면 배경에 합성할 이미지를 업로드해주세요!</h1>
+<form method="post" action="http://localhost:8001/tale/getimage" enctype="multipart/form-data">
+    <h1>주인공이 될 사진을 넣어주세요.</h1>
+    <input type="file" name="singFile">
+    <button type="submit">확인</button>
+</form>
+</body>
+</html>
+    <title>Title</title>
+</head>
