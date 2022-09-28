@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/member/login")
                     .successHandler(customLoginSuccessHandler)
-//                    .defaultSuccessUrl("/")
+                    .defaultSuccessUrl("/")
                     .failureUrl("/member/loginfail")
                     .usernameParameter("memberId")
                     .passwordParameter("memberPwd")
