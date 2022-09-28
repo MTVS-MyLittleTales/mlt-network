@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface TaleService {
     List<TaleDTO> findTaleList();
+    void test();
 }
+

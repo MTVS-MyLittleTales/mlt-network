@@ -27,4 +27,9 @@ public class TaleServiceTempImpl implements TaleService {
         System.out.println("TaleServiceTempImpl.findTaleList");
         return mapper.findTaleList();
     }
+
+    @Override
+    public void test() {
+        System.out.println(mapper);
+    }
 }
