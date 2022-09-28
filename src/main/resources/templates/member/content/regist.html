@@ -5,63 +5,52 @@
 
 <th:block layout:fragment="content">
 
-  <div class="outer outer-member-insert">
-    <br>
-    <h2 style="text-align: center">회원 가입</h2>
+  <main>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h2 class="text-center text-dark mt-5">회원 가입</h2>
+        <div class="text-center mb-5 text-dark">my little tales</div>
+        <div class="card my-5">
+          <form class="card-body cardbody-color p-lg-5" id="joinForm" th:action="@{/member/regist}" method="post">
+            <div class="input-group mb-3">
+              <span class="input-group-text col-3" id="memberIdText">아이디</span>
+              <input type="text" class="form-control" id="memberId" name="memberId"
+                     placeholder="가입할 아이디">
+              <button class="btn btn-outline-secondary" type="button" id="duplicationCheck">중복확인</button>
+            </div>
+            <div class="input-group mb-1">
+              <span class="input-group-text col-3" id="memberPwdText">비밀번호</span>
+              <input type="password" class="form-control" id="memberPwd" name="memberPwd"
+                     placeholder="가입할 비밀번호">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text col-3" id="memberPwd2Text">비밀번호 확인</span>
+              <input type="password" class="form-control" id="memberPwd2" name="memberPwd2"
+                     placeholder="가입할 비밀번호 확인">
+            </div>
 
-    <form id="joinForm" th:action="@{/member/regist}" method="post">
-      <table style="margin: 0 auto">
-        <tr>
-          <td style="width: 120px">* 아이디 </td>
-          <td><input type="text" maxlength="13" name="memberId" id="memberId" required></td>
-          <td style="width: 100px"><input type="button" value="중복 확인" class="btn btn-bs" id="duplicationCheck"></td>
-        </tr>
-        <tr>
-          <td>* 비밀번호</td>
-          <td><input type="password" maxlength="13" name="memberPwd" required></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>* 비밀번호확인</td>
-          <td><input type="password" maxlength="13" name="memberPwd2"></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>* 회원이름</td>
-          <td><input type="text" maxlength="5" name="memberName" required></td>
-          <td></td>
-        </tr>
-      </table>
-      <br>
-      <div class="btns" style="align-items: center">
-        <button type="button" class="btn btn-pk" id="goMain" th:onclick="|location.href='@{/}'|">돌아가기</button>
-        <input type="submit" value="가입하기" class="btn btn-or">
+
+            <div class="input-group mb-3">
+              <span class="input-group-text col-3" id="memberNameText">사용자 이름</span>
+              <input type="text" class="form-control" id="memberName" name="memberName"
+                     placeholder="가입할 사용자 이름">
+            </div>
+
+            <div class="text-center mb-5">
+              <button type="button" class="btn btn-dark" id="goMain" th:onclick="|location.href='@{/}'|">돌아가기</button>
+              <button type="submit" class="btn btn-primary" id="login">가입하기</button>
+            </div>
+
+            <div id="loginHelp" class="form-text text-center mb-5 text-dark">회원이신가요?
+              <a href="/member/login" class="text-dark fw-bold">로그인 하러가기</a>
+            </div>
+          </form>
+        </div>
       </div>
-    </form>
-  </div>
+    </div>
+    <script src="/js/event.js"></script>
+  </main>
 </th:block>
 
+
 </html>
-
-<!--<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>-->
-<!--<script th:inline="javascript">-->
-
-<!--  const $searchZipCode = document.getElementById("searchZipCode");-->
-<!--  const $goMain = document.getElementById("goMain");-->
-
-<!--  $searchZipCode.onclick = function() {-->
-
-<!--    new daum.Postcode({-->
-<!--      oncomplete: function(data){-->
-<!--        document.getElementById("zipCode").value = data.zonecode;-->
-<!--        document.getElementById("address1").value = data.address;-->
-<!--        document.getElementById("address2").focus();-->
-<!--      }-->
-<!--    }).open();-->
-<!--  }-->
-
-<!--  $goMain.onclick = function() {-->
-<!--    location.href = "/";-->
-<!--  }-->
-
-<!--</script>-->

@@ -244,7 +244,7 @@ public class TaleController {
     @GetMapping("/list")
     public String goTaleList() {
 
-        System.out.println("동화 만들러 가기!");
+        System.out.println("동화 목록으로 가기!");
         return("tale/list");
     }
 
@@ -260,10 +260,19 @@ public class TaleController {
 
         return mv;
     }
+
     @GetMapping("result3")
     public ModelAndView resultPage(ModelAndView mv){
         mv.setViewName("member/tale/result3");
         return mv;
+
+
+    @GetMapping("/detail")
+    public String goTaleDetail() {
+
+        System.out.println("4컷 동화 보러 가기");
+        return("tale/detail");
+
     }
 }
 
