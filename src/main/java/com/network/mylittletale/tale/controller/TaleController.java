@@ -40,17 +40,12 @@
 package com.network.mylittletale.tale.controller;
 
 
-import com.network.mylittletale.tale.model.dto.ChildDTO;
 import com.network.mylittletale.tale.model.dto.CutDataDTO;
+import com.network.mylittletale.tale.model.dto.TaleDTO;
 import com.network.mylittletale.tale.model.service.TaleService;
-import org.apache.groovy.parser.antlr4.GroovyParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationContextFactory;
-import org.springframework.boot.web.servlet.server.Session;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -64,13 +59,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 
 
@@ -80,6 +73,9 @@ import java.util.*;
 public class TaleController {
 
     private int sequence;
+    private int cutSequence = 0;
+
+    private int taleSequence;
     private TaleService taleService;
     @Autowired
     public TaleController(TaleService taleService) {
@@ -117,7 +113,7 @@ public class TaleController {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String url = "http://192.168.0.23:5001/getimage";
+        String url = "http://3.39.11.95:56832/getimage";
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("image", imageData);
@@ -131,8 +127,7 @@ public class TaleController {
             file.mkdirs();
         }
 
-
-        try{
+        try {
             JSONObject data = (JSONObject) parser.parse(aiResponse.getBody());
             String resultText = (String) data.get("text");
             String resultImage = (String) data.get("image");
@@ -140,40 +135,44 @@ public class TaleController {
 
             ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(resultByte));
             BufferedImage bufferedImage = ImageIO.read(inputStream);
-            ImageIO.write(bufferedImage, "png", new File(filePath+"\\result"+ sequence +".png"));
+            ImageIO.write(bufferedImage, "png", new File(filePath + "\\result" + sequence + ".png"));
 
-            rttr.addFlashAttribute("imageName", "result"+sequence+".png");
-            mv.setViewName("redirect:/tale/result2");
-            CutDataDTO cutDataDTO = new CutDataDTO();
-            if(user.isEnabled()){
-                int taleNo = 1;
-                cutDataDTO.setCutNo(sequence);
-                cutDataDTO.setInputSentence(resultText);
-                cutDataDTO.setTaleNo(taleNo); //동화번호기입되어야함
-                int cutSequence = taleService.getCutSequence(taleNo)+1;
-                if(cutSequence>4){
-                    cutSequence = 1;
-                }
-                cutDataDTO.setCutSequence(cutSequence);
-                cutDataDTO.setImgName("result"+sequence+".png");
-                cutDataDTO.setMemberYN("Y");
-            }else{
-                cutDataDTO.setCutNo(sequence);
-                cutDataDTO.setInputSentence(resultText);
-                cutDataDTO.setCutSequence(1);
-                cutDataDTO.setImgName("result"+sequence+".png");
-                cutDataDTO.setMemberYN("N");
-                Cookie myCookie = new Cookie("sequnece", sequence+"");
-                res.addCookie(myCookie);
+            //동화 생성에 필요한 아이번호, 동화번호 값으로 동화 만들기\
+
+            if(cutSequence==0) {
+                taleSequence = taleService.getTaleSequence();
+                Map<String, Integer> tale = new HashMap<>();
+                tale.put("taleNo", taleSequence);
+                tale.put("childNo", 1);
+                taleService.insertTale(tale);
+                cutSequence = 1;
             }
+            System.out.println("cutSequence1 = " + cutSequence);
+
+            CutDataDTO cutDataDTO = new CutDataDTO();
+            cutDataDTO.setCutNo(sequence);
+            cutDataDTO.setInputSentence(resultText);
+            cutDataDTO.setCutSequence(cutSequence);
+            cutDataDTO.setTaleNo(taleSequence);
+            cutDataDTO.setImgName("result" + sequence + ".png");
+            cutDataDTO.setMemberYN("Y");
+            System.out.println("cutDataDTO = " + cutDataDTO);
             taleService.insertCutData(cutDataDTO);
+            cutSequence = taleService.getCutSequence(taleSequence);
+            cutSequence += 1;
+            if(cutSequence==5){
+                cutSequence = 0;
+                mv.setViewName("redirect:/tale/result3");
+            }else{
+                mv.setViewName("redirect:/tale/result2");
+            }
+
+            System.out.println("cutSequence2 = " + cutSequence);
+            rttr.addFlashAttribute("imageName", "result" + sequence + ".png");
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-
 
         return mv;
     }
@@ -181,13 +180,12 @@ public class TaleController {
     @PostMapping("gettext")
     public ModelAndView getInputText(ModelAndView mv, @RequestParam String content, HttpSession httpSession, RedirectAttributes rttr) {
         sequence = taleService.getCutNo();
-        String url = "http://192.168.0.23:5001/gettext";
+        String url = "http://3.39.11.95:56832/gettext";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         MultiValueMap<String, String> text = new LinkedMultiValueMap<>();
         text.add("text", content);
-
 
         HttpEntity<?> requestMessage = new HttpEntity<>(text, headers);
         RestTemplate restTemplate = new RestTemplate();
@@ -208,7 +206,7 @@ public class TaleController {
 
         ByteArrayInputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(resultByte));
         BufferedImage bufferedImage = ImageIO.read(inputStream);
-//        sequence++;
+
         ImageIO.write(bufferedImage, "png", new File(filePath+"\\result"+ sequence +".png"));
 
         }catch (Exception e){
@@ -236,7 +234,6 @@ public class TaleController {
         return mv;
     }
 
-
     @GetMapping("/create")
     public String createTale() {
 
@@ -255,6 +252,7 @@ public class TaleController {
     public ModelAndView tempPage(ModelAndView mv){
         int taleNo = 1;
         List<CutDataDTO> cutList = taleService.getTales(taleNo);
+        System.out.println("cutList = " + cutList);
         mv.addObject("firstCut", cutList.get(0));
         mv.addObject("secondCut", cutList.get(1));
         mv.addObject("thirdCut", cutList.get(2));
@@ -262,6 +260,10 @@ public class TaleController {
 
         return mv;
     }
-
+    @GetMapping("result3")
+    public ModelAndView resultPage(ModelAndView mv){
+        mv.setViewName("member/tale/result3");
+        return mv;
+    }
 }
 

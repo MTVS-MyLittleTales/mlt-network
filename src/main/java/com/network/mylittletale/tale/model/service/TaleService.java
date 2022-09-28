@@ -1,14 +1,13 @@
 package com.network.mylittletale.tale.model.service;
 
 import com.network.mylittletale.tale.model.dto.CutDataDTO;
-import com.network.mylittletale.tale.model.dto.TaleDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface TaleService {
-    List<TaleDTO> findTaleList();
+
     void test();
 
     int insertCutData(CutDataDTO cutDataDTO);
@@ -18,5 +17,11 @@ public interface TaleService {
     int getCutSequence(int taleNo);
 
     List<CutDataDTO> getTales(int taleNo);
+
+    int updateTaleNo(Map<String, Integer> map);
+
+    int insertTale(Map<String, Integer> childNo);
+
+    int getTaleSequence();
 }
 
