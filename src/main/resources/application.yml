@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@mtvsdbserver_high?TNS_ADMIN=./src/main/resources/database/Wallet_mtvsDBServer
+    url: jdbc:oracle:thin:@mtvsdbserver_medium?TNS_ADMIN=./src/main/resources/database/Wallet_mtvsDBServer
     username: Mylittletales
     password: mtvsNetwork12
   servlet:
@@ -12,7 +12,11 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 10MB
+
+      location: D:/thymeleaf-springboot/
+
   #      location: C:/Users/HP/Desktop/AIproject/
+
   devtools:
     restart:
       enabled: false
@@ -20,14 +24,16 @@ spring:
       enabled: true
   freemarker:
     cache: false
+
+#  web:
+#    resources:
+#      static-location: classpath:/upload
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     cache: false
     check-template-location: true
-  web:
-    resources:
-      static-locations: classpath:/upload/
+
 
 image:
   image-dir: src/main/resources

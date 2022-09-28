@@ -5,11 +5,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class MvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/templates/", "classpath:/static/", "classpath:/database/", "classpath:/upload/");
+
+        registry.addResourceHandler("/upload/**").addResourceLocations("classpath:/upload/");
     }
 }
