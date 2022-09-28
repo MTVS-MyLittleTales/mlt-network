@@ -1,36 +1,23 @@
 package com.network.mylittletale.tale.model.dto;
 
-import org.apache.ibatis.type.Alias;
-
-import java.util.Date;
+import java.sql.Date;
 
 public class TaleDTO {
-
-    private int cutNo;
     private int taleNo;
-    private String taleName;
-    private int memberNo;
-    private java.util.Date creationDate;
-    private java.util.Date lastLookupDate;
+    private java.sql.Date createDate;
+    private java.sql.Date lastViewDate;
+    private String isDelete;
+    private int childNo;
 
     public TaleDTO() {
     }
 
-    public TaleDTO(int cutNo, int taleNo, String taleName, int memberNo, Date creationDate, Date lastLookupDate) {
-        this.cutNo = cutNo;
+    public TaleDTO(int taleNo, Date createDate, Date lastViewDate, String isDelete, int childNo) {
         this.taleNo = taleNo;
-        this.taleName = taleName;
-        this.memberNo = memberNo;
-        this.creationDate = creationDate;
-        this.lastLookupDate = lastLookupDate;
-    }
-
-    public int getCutNo() {
-        return cutNo;
-    }
-
-    public void setCutNo(int cutNo) {
-        this.cutNo = cutNo;
+        this.createDate = createDate;
+        this.lastViewDate = lastViewDate;
+        this.isDelete = isDelete;
+        this.childNo = childNo;
     }
 
     public int getTaleNo() {
@@ -41,47 +28,46 @@ public class TaleDTO {
         this.taleNo = taleNo;
     }
 
-    public String getTaleName() {
-        return taleName;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setTaleName(String taleName) {
-        this.taleName = taleName;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
-    public int getMemberNo() {
-        return memberNo;
+    public Date getLastViewDate() {
+        return lastViewDate;
     }
 
-    public void setMemberNo(int memberNo) {
-        this.memberNo = memberNo;
+    public void setLastViewDate(Date lastViewDate) {
+        this.lastViewDate = lastViewDate;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public String getIsDelete() {
+        return isDelete;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
     }
 
-    public Date getLastLookupDate() {
-        return lastLookupDate;
+    public int getChildNo() {
+        return childNo;
     }
 
-    public void setLastLookupDate(Date lastLookupDate) {
-        this.lastLookupDate = lastLookupDate;
+    public void setChildNo(int childNo) {
+        this.childNo = childNo;
     }
 
     @Override
     public String toString() {
         return "TaleDTO{" +
-                "cutNo=" + cutNo +
-                ", taleNo=" + taleNo +
-                ", taleName='" + taleName + '\'' +
-                ", memberNo=" + memberNo +
-                ", creationDate=" + creationDate +
-                ", lastLookupDate=" + lastLookupDate +
+                "taleNo=" + taleNo +
+                ", createDate=" + createDate +
+                ", lastViewDate=" + lastViewDate +
+                ", isDelete='" + isDelete + '\'' +
+                ", childNo=" + childNo +
                 '}';
     }
 }
