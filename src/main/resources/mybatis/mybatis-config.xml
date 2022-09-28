@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="callSettersOnNulls" value="true" />
+        <setting name="jdbcTypeForNull" value="NULL" />
+    </settings>
+
+    <typeAliases>
+        <typeAlias alias="MemberDTO" type="com.network.mylittletale.member.model.dto.MemberDTO"/>
+        <typeAlias alias="TaleDTO" type="com.network.mylittletale.tale.dto.TaleDTO"/>
+    </typeAliases>
+
+    <mappers>
+        <mapper resource="MemberMapper.xml"/>
+        <mapper resource="TaleMapper.xml"/>
+        <mapper resource="AdminMapper.xml"/>
+    </mappers>
+
+</configuration>
