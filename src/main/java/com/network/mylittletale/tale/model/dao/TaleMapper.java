@@ -1,6 +1,7 @@
 package com.network.mylittletale.tale.model.dao;
 
 import com.network.mylittletale.tale.model.dto.CutDataDTO;
+import com.network.mylittletale.tale.model.dto.TaleDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,5 +23,5 @@ public interface TaleMapper {
 
     int getTaleSequence();
 
-    List<Integer> getTaleList(int childNo);
+    List<TaleDTO> getTaleList(int childNo);
 }
