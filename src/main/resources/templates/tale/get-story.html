@@ -50,15 +50,18 @@
     <h2 th:align="center" style="margin-top: 100px; margin-bottom: 50px">이야기를 입력해주세요.</h2>
 
     <div style="display: flex; justify-content: center">
+        <form method="post" action="/tale/gettext">
         <div class="form-floating">
-            <textarea class="form-control" placeholder="story" id="floatingTextarea" style="width: 500px; height: 200px"></textarea>
+            <textarea class="form-control" placeholder="story" id="floatingTextarea" name="content"style="width: 500px; height: 200px"></textarea>
             <label for="floatingTextarea">이야기 내용</label>
+            <div style="display: flex; justify-content: center; margin-top: 50px" >
+                <button type="submit" class="btn btn-primary" role="button">다음</button>
+            </div>
         </div>
+        </form>
     </div>
 
-    <div style="display: flex; justify-content: center; margin-top: 50px" >
-        <a class="btn btn-primary" href="#" role="button" onclick="location.href='/tale/select-img'">다음</a>
-    </div>
+
 
 
 </th:block>

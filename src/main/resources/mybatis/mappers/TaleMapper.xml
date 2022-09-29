@@ -82,4 +82,11 @@
         )
     </insert>
 
+    <select id="getTaleList" resultType="int">
+        SELECT
+               TALE_NO
+          FROM TBL_CREATED_TALE
+         WHERE CHILD_NO = #{childNo}
+    </select>
+
 </mapper>

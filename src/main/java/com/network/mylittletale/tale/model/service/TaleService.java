@@ -23,5 +23,7 @@ public interface TaleService {
     int insertTale(Map<String, Integer> childNo);
 
     int getTaleSequence();
+
+    List<Integer> getTaleList(int childNo);
 }
 
