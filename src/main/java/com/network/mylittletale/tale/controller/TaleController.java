@@ -75,6 +75,7 @@ public class TaleController {
     private int sequence;
     private int cutSequence = 0;
 
+    private final String pythonRootPath = "http://119.194.163.123:7777";
     private int taleSequence;
     private TaleService taleService;
     @Autowired
@@ -114,7 +115,7 @@ public class TaleController {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String url = "http://3.39.11.95:56832/getimage";
+        String url = pythonRootPath + "/getimage";
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("image", imageData);
@@ -163,11 +164,9 @@ public class TaleController {
             cutSequence += 1;
             if(cutSequence==5){
                 cutSequence = 0;
-                mv.setViewName("redirect:/tale/detail");
+                mv.setViewName("redirect:/tale/detail/"+taleSequence);
             }else{
                 mv.setViewName("redirect:/tale/final-img");
-                HttpSession httpSession = request.getSession();
-                httpSession.setAttribute("taleNo", taleSequence);
             }
 
             System.out.println("cutSequence2 = " + cutSequence);
@@ -183,8 +182,8 @@ public class TaleController {
     @PostMapping("gettext")
     public ModelAndView getInputText(ModelAndView mv, @RequestParam String content, HttpSession httpSession, RedirectAttributes rttr) {
         sequence = taleService.getCutNo();
-        String url = "http://3.39.11.95:56832/gettext";
-
+        String url = pythonRootPath + "/gettext";
+        System.out.println("url = " + url);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         MultiValueMap<String, String> text = new LinkedMultiValueMap<>();
@@ -267,11 +266,16 @@ public class TaleController {
 
 
     @GetMapping("/list")
-    public String goTaleList() {
+    public ModelAndView goTaleList(ModelAndView mv) {
         int childNo = 0;
-        List<Integer> TaleList = taleService.getTaleList(childNo);
+        List<TaleDTO> list = taleService.getTaleList(1);
+        Object[] taleList = list.stream().filter(i -> i.getCutDataDTOList().size()>3).toArray();
+        System.out.println("taleList = " + taleList);
+        System.out.println("TaleList = " + taleList);
         System.out.println("동화 목록으로 가기!");
-        return("tale/list");
+        mv.addObject("taleList", taleList);
+        mv.setViewName("tale/list");
+        return mv;
     }
 
     @GetMapping("/final-img")
@@ -280,7 +284,6 @@ public class TaleController {
         System.out.println("최종 이미지 확인!");
         return("tale/final-img");
     }
-
 
     @GetMapping("temp")
     public ModelAndView tempPage(ModelAndView mv){
@@ -296,14 +299,11 @@ public class TaleController {
         return mv;
     }
 
-    @GetMapping("/detail")
-    public ModelAndView goTaleDetail(ModelAndView mv, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-//        int taleNo = (Integer) session.getAttribute("taleNo");
-        List<CutDataDTO> cutList = taleService.getTales(14);
+    @GetMapping("/detail/{taleNo}")
+    public ModelAndView goTaleDetail(ModelAndView mv, @PathVariable("taleNo")int taleNo) {
+        List<CutDataDTO> cutList = taleService.getTales(taleNo);
+
         System.out.println("cutList.get(0) = " + cutList.get(0));
-
-
 
         mv.addObject("firstCutImgName", cutList.get(0).getImgName());
         mv.addObject("secondCutImgName", cutList.get(1).getImgName());
@@ -317,5 +317,18 @@ public class TaleController {
         mv.setViewName("tale/detail");
         return mv;
     }
+
+//    @GetMapping(value = "thumnail/{taleNo}", produces = MediaType.IMAGE_PNG_VALUE)
+//    @ResponseBody
+//    public byte[] getThumnail (@PathVariable("taleNo") int taleNo) throws IOException {
+//        List<CutDataDTO> cutDataDTOList = taleService.getTales(1);
+//        String fileName = cutDataDTOList.get(0).getImgName();
+//        File file = new File("\\public\\"+fileName);
+//
+//        byte[] byteImage = Files.readAllBytes(file.toPath());
+//        return byteImage;
+//    }
+
+
 }
 
