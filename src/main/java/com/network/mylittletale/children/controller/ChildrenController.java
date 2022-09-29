@@ -65,7 +65,8 @@ public class ChildrenController {
         System.out.println("memberNo = " + childNo);
         MemberDTO loginedMember = (MemberDTO) authentication.getPrincipal();
 
-        childrenService.findChildrenByMemberNo(loginedMember.getMemberNo());
+//        ChildrenDTO foundedChildren = childrenService.findChildrenFindbychildNo(;
+
 
 
         mv.setViewName("children/update");

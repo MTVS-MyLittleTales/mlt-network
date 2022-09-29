@@ -40,4 +40,7 @@ public class ChildrenService {
         return mapper.findChildrenByMemberNo(loginedMemberNo);
     }
 
+//    public ChildrenDTO findChildrenFindbychildNo(int memberNo) {
+////        return mapper.findChildrenByChildNo(child);
+//    }
 }
