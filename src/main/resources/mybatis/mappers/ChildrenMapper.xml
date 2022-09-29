@@ -38,4 +38,10 @@
         WHERE A.CHILD_NO = ${childNo}
         ORDER BY A.CHILD_NO ASC
     </select>
+
+    <delete id="deleteChildren">
+        DELETE
+          FROM TBL_CHILDREN A
+         WHERE A.CHILD_NO = ${childNo}
+    </delete>
 </mapper>

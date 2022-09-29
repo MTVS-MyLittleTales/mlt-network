@@ -24,19 +24,43 @@
         </thead>
         <tbody>
         <tr th:each="children : ${childrenList}">
-          <th th:id="|childrenId${children.childNo}|" scope="row" th:text="${children.childNo}"/>
+          <th scope="row" th:text="${children.childNo}"/>
           <td th:text="${children.childName}"/>
           <td th:text="${children.childBirth}"/>
           <td th:text="${children.childGender}"/>
           <td>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
+              삭제
+            </button>
 <!--            <button class="btn btn-outline-primary" th:onclick="|location.href='@{./delete(childNo=${children.childNo})}'|">삭제</button>-->
-            <button th:childNo="${children.childNo}"  id="deleteChildren" class="btn btn-outline-primary">삭제</button>
           </td>
-
+          <!-- Modal -->
+          <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">자녀 정보 삭제</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  정말 삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                  <form action="/children/delete" method="post">
+                    <input type="hidden" name="childrenNo" id="childrenNo" th:value="${children.childNo}"/>
+                    <button  id="deleteChildren" class="btn btn-outline-primary">삭제</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </tr>
         </tbody>
       </table>
     </div>
+
+
   </main>
 </th:block>
 </html>

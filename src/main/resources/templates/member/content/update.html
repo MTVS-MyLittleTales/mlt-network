@@ -12,13 +12,13 @@
     <form id="joinForm" th:action="@{/member/update}" method="post">
       <table align="center">
         <input
-                type="hidden"
-                id="memberId"
-                name="memberId"
-                th:value="${ #authentication.getPrincipal().getMemberId() }"
+            type="hidden"
+            id="memberId"
+            name="memberId"
+            th:value="${ #authentication.getPrincipal().getMemberId() }"
         >
         <tr>
-          <td width="200px">* 아이디 </td>
+          <td width="200px">* 아이디</td>
           <td><p th:text="${ #authentication.getPrincipal().getMemberId() }"></p></td>
         </tr>
         <tr>
@@ -39,17 +39,40 @@
       </table>
       <br>
       <div class="btns" align="center">
-        <button type="button" class="btn btn-pk" id="goMain" onclick="location.href='/'">돌아가기</button>
-        <button type="button" class="btn btn-pk" id="goChild" onclick="location.href='/children/list'">자녀 관리하기</button>
-        <input type="submit" value="수정하기" class="btn btn-or">
-        <input
-                type="button"
-                value="탈퇴하기"
-                class="btn btn-bs"
-                th:onclick="'location.href=\'/member/delete?id='+ @{${ #authentication.getPrincipal().getMemberId() }} + '\''"
-        >
+        <button type="button" class="btn btn-outline-primary" id="goMain" onclick="location.href='/'">돌아가기</button>
+        <button type="button" class="btn btn-outline-primary" id="goChild" onclick="location.href='/children/list'">자녀
+          관리하기
+        </button>
+        <input type="submit" value="수정하기" class="btn btn-outline-primary">
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
+          삭제
+        </button>
+<!--        <input-->
+<!--            type="button"-->
+<!--            value="탈퇴하기"-->
+<!--            class="btn btn-bs"-->
+<!--            th:onclick="'location.href=\'/member/delete?id='+ @{${ #authentication.getPrincipal().getMemberId() }} + '\''"-->
+<!--        >-->
       </div>
     </form>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">회원 정보 삭제</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            정말 탈퇴하시겠습니까? <br> <span class="text-danger">탈퇴하면 다시는 복구할 수 없습니다.</span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            <input type="button" value="탈퇴하기" class="btn btn-outline-primary" th:onclick="'location.href=\'/member/delete?id='+ @{${ #authentication.getPrincipal().getMemberId() }} + '\''"
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 

@@ -17,4 +17,6 @@ public interface ChildrenMapper {
     ChildrenDTO findChildrenByChildren(int childNo);
 
     int updateChildren(ChildrenDTO updateChildren);
+
+    int deleteChildren(int childrenNo);
 }

@@ -32,9 +32,9 @@ public class ChildrenService {
         int result =  mapper.registChildren(children);
 
         if (result > 0) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
 
     }
 
@@ -42,4 +42,15 @@ public class ChildrenService {
         return mapper.findChildrenByMemberNo(loginedMemberNo);
     }
 
+    @Transactional
+    public boolean deleteChildren(int childrenNo) {
+        int result = mapper.deleteChildren(childrenNo);
+
+        if (result > 0) {
+            return true;
+        }
+        return false;
+
+
+    }
 }

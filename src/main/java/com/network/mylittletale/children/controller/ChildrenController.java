@@ -7,14 +7,12 @@ import com.network.mylittletale.tale.model.dto.TaleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("children")
@@ -36,13 +34,15 @@ public class ChildrenController {
     }
 
     @PostMapping("regist")
-    public ModelAndView registChild(ModelAndView mv, ChildrenDTO children, Authentication authentication) {
+    public ModelAndView registChild(ModelAndView mv, ChildrenDTO children, Authentication authentication, RedirectAttributes rttr) {
         MemberDTO loginedMember = (MemberDTO) authentication.getPrincipal();
         children.setMemberNo(loginedMember.getMemberNo());
 //        System.out.println("children = " + children);
 
         System.out.println("children = " + children);
         childrenService.registChildren(children);
+
+        rttr.addFlashAttribute("message", "자녀 등록이 완료되었습니다.");
 
         mv.setViewName("redirect:/");
         return mv;
@@ -62,6 +62,13 @@ public class ChildrenController {
         return mv;
     }
 
+    @PostMapping("delete")
+    public ModelAndView deleteChildren(ModelAndView mv,@RequestParam int childrenNo, RedirectAttributes rttr) {
+        System.out.println("childrenNo = " + childrenNo);
+        childrenService.deleteChildren(childrenNo);
+
+        rttr.addFlashAttribute("message", "삭제가 완료되었습니다.");
+        
     @GetMapping("/get-child")
     public ModelAndView getChild(ModelAndView mv) {
 //        int childNo = 0;
@@ -74,5 +81,7 @@ public class ChildrenController {
         return mv;
     }
 
-
+        mv.setViewName("redirect:/children/list");
+        return mv;
+    }
 }
