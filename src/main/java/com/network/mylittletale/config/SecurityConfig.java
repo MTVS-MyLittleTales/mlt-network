@@ -49,26 +49,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                    .authorizeRequests()
-                    .mvcMatchers( "/tale/**").hasAnyAuthority("ROLE_MEMBER", "ROLE_ADMIN")
-                    .mvcMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
-                    .mvcMatchers("/**", "/member/**").permitAll();
-//                .and()
-//                    .csrf().disable();
-
-        http
-                    .formLogin()
-                    .loginPage("/member/login")
-                    .successHandler(customLoginSuccessHandler)
-                    .failureUrl("/member/loginfail")
-                    .usernameParameter("memberId")
-                    .passwordParameter("memberPwd")
+                .authorizeRequests()
+                .mvcMatchers("/tale/**").hasAnyAuthority("ROLE_MEMBER", "ROLE_ADMIN")
+                .mvcMatchers("/children/**").hasAnyAuthority("ROLE_MEMBER", "ROLE_ADMIN")
+                .mvcMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                .mvcMatchers("/**", "/member/**").permitAll()
                 .and()
-                    .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-                    .deleteCookies("JSESSIONID")
-                    .invalidateHttpSession(true)
-                    .logoutSuccessUrl("/");
+                .csrf().disable();
+        http
+                .formLogin()
+                .loginPage("/member/login")
+                .successHandler(customLoginSuccessHandler)
+                .failureUrl("/member/loginfail")
+                .usernameParameter("memberId")
+                .passwordParameter("memberPwd")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .logoutSuccessUrl("/");
 
     }
 

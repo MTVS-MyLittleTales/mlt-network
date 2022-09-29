@@ -43,10 +43,10 @@
 <body>
 
 
-<div class="d-flex flex-column vh-100">
+<div class="d-flex flex-column">
   <header th:replace="common/fragments/header :: headerFragment"></header>
-  <div class="flex-grow-1">
-    <div class="flex-grow-1" layout:fragment="content"></div>
+  <div class="flex-grow-1 min-vh-100">
+    <div layout:fragment="content"></div>
   </div>
   <footer style="transform: translateY(-100%)" th:replace="common/fragments/footer :: footerFragment"></footer>
 </div>

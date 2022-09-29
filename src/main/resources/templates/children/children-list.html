@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/layout}">
+
+<th:block layout:fragment="content">
+  <main>
+    <div class="container">
+      <p class="h2">자녀 목록 조회</p>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col" >#</th>
+          <th scope="col" >자녀명</th>
+          <th scope="col" >생일</th>
+          <th scope="col">성별</th>
+          <th scope="col">수정버튼</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="children : ${childrenList}">
+          <th scope="row" th:text="${children.childNo}"/>
+          <td th:text="${children.childName}"/>
+          <td th:text="${children.childBirth}"/>
+          <td th:text="${children.childGender}"/>
+          <td><button class="btn btn-outline-primary" th:onclick="|location.href='@{./update(childNo=${children.childNo})}'|">수정하기</button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</th:block>
+</html>

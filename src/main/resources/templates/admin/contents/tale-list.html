@@ -17,7 +17,7 @@
 <div layout:fragment="content">
 
   <h1>동화 전체 목록 조회</h1>
-  <table class="table  ">
+  <table class="table table-hover">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -27,17 +27,20 @@
       <th scope="col">생성 아이디</th>
       <th scope="col">자녀 명</th>
     </tr>
-    <tr th:each="tale : ${taleList}" >
+
+    </thead>
+    <tbody>
+    <tr th:each="tale : ${taleList}">
       <th:block th:href="|?taleNo=${tale.taleNo}|">
-      <td th:text="${tale.taleNo}"/>
-      <td th:text="${tale.createdDate}"/>
-      <td th:text="${tale.lastViewedDate}"/>
-      <td th:text="${tale.isDelete}"/>
+        <td th:text="${tale.taleNo}"/>
+        <td th:text="${tale.createdDate}"/>
+        <td th:text="${tale.lastViewedDate}"/>
+        <td th:text="${tale.isDelete}"/>
         <td th:text="${tale.adminChildrenAndMemberDTO.adminMemberDTO.memberName}"/>
         <td th:text="${tale.adminChildrenAndMemberDTO.childName}"/>
       </th:block>
     </tr>
-    </thead>
+    </tbody>
   </table>
 
 </div>

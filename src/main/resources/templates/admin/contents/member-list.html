@@ -17,7 +17,7 @@
 <div layout:fragment="content">
 
   <h1>회원 전체 목록 조회</h1>
-  <table class="table  ">
+  <table class="table table-hover">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -28,16 +28,19 @@
       <th scope="col">탈퇴 여부</th>
       <th scope="col">탈퇴 일시</th>
     </tr>
-      <tr th:each="member : ${memberList}" th:href="|?memberNo=${member.memberNo}|">
-        <td th:text="${member.memberNo}"/>
-        <td th:text="${member.memberId}"/>
-        <td th:text="${member.memberName}"/>
-        <td th:text="${member.memberRegistDatetime}"/>
-        <td th:text="${member.childrenCnt}"/>
-        <td th:text="${member.memberSecessionYN}"/>
-        <td th:text="${member.memberSecessionDatetime}"/>
-      </tr>
     </thead>
+    <tbody>
+    <tr th:each="member : ${memberList}" th:href="|?memberNo=${member.memberNo}|">
+      <td th:text="${member.memberNo}"/>
+      <td th:text="${member.memberId}"/>
+      <td th:text="${member.memberName}"/>
+      <td th:text="${member.memberRegistDatetime}"/>
+      <td th:text="${member.childrenCnt}"/>
+      <td th:text="${member.memberSecessionYN}"/>
+      <td th:text="${member.memberSecessionDatetime}"/>
+    </tr>
+    </tbody>
+
   </table>
 
 </div>
