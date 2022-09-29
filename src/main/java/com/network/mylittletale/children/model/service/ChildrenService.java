@@ -17,6 +17,8 @@ public class ChildrenService {
     public ChildrenService(ChildrenMapper mapper) {
         this.mapper = mapper;
     }
+
+
     public boolean hasChildren(int memberId) {
         ChildrenDTO selectedChildren = mapper.hasChildren(memberId);
         if(selectedChildren != null){

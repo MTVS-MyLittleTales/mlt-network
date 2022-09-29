@@ -7,7 +7,11 @@
 <th:block layout:fragment="content">
   <main>
     <div class="container">
+      <div class="d-flex justify-content-between">
       <p class="h2">자녀 목록 조회</p>
+        <a class="btn btn-outline-primary"
+           href="regist">추가하기</a>
+      </div>
       <table class="table table-hover">
         <thead>
         <tr>
@@ -15,16 +19,20 @@
           <th scope="col" >자녀명</th>
           <th scope="col" >생일</th>
           <th scope="col">성별</th>
-          <th scope="col">수정버튼</th>
+          <th scope="col">삭제</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="children : ${childrenList}">
-          <th scope="row" th:text="${children.childNo}"/>
+          <th th:id="|childrenId${children.childNo}|" scope="row" th:text="${children.childNo}"/>
           <td th:text="${children.childName}"/>
           <td th:text="${children.childBirth}"/>
           <td th:text="${children.childGender}"/>
-          <td><button class="btn btn-outline-primary" th:onclick="|location.href='@{./update(childNo=${children.childNo})}'|">수정하기</button></td>
+          <td>
+<!--            <button class="btn btn-outline-primary" th:onclick="|location.href='@{./delete(childNo=${children.childNo})}'|">삭제</button>-->
+            <button th:childNo="${children.childNo}"  id="deleteChildren" class="btn btn-outline-primary">삭제</button>
+          </td>
+
         </tr>
         </tbody>
       </table>

@@ -271,7 +271,6 @@ public class TaleController {
         List<TaleDTO> list = taleService.getTaleList(1);
         Object[] taleList = list.stream().filter(i -> i.getCutDataDTOList().size()>3).toArray();
         System.out.println("taleList = " + taleList);
-        System.out.println("TaleList = " + taleList);
         System.out.println("동화 목록으로 가기!");
         mv.addObject("taleList", taleList);
         mv.setViewName("tale/list");
@@ -317,6 +316,14 @@ public class TaleController {
         mv.setViewName("tale/detail");
         return mv;
     }
+
+    @GetMapping("/get-child")
+    public ModelAndView getChildInfo(ModelAndView mv){
+        mv.setViewName("tale/get-child");
+        return mv;
+    }
+
+
 
 //    @GetMapping(value = "thumnail/{taleNo}", produces = MediaType.IMAGE_PNG_VALUE)
 //    @ResponseBody
