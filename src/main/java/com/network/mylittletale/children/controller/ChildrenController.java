@@ -61,8 +61,11 @@ public class ChildrenController {
     }
 
     @GetMapping("update")
-    public ModelAndView updateLocation(ModelAndView mv, @RequestParam(name="childNo") int childNo) {
+    public ModelAndView updateLocation(ModelAndView mv, @RequestParam(name="childNo") int childNo, Authentication authentication) {
         System.out.println("memberNo = " + childNo);
+        MemberDTO loginedMember = (MemberDTO) authentication.getPrincipal();
+
+        childrenService.findChildrenByMemberNo(loginedMember.getMemberNo());
 
 
         mv.setViewName("children/update");
