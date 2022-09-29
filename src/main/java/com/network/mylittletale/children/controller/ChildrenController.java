@@ -3,6 +3,7 @@ package com.network.mylittletale.children.controller;
 import com.network.mylittletale.children.model.dto.ChildrenDTO;
 import com.network.mylittletale.children.model.service.ChildrenService;
 import com.network.mylittletale.member.model.dto.MemberDTO;
+import com.network.mylittletale.tale.model.dto.TaleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -58,6 +59,18 @@ public class ChildrenController {
 
         mv.setViewName("children/children-list");
 
+        return mv;
+    }
+
+    @GetMapping("/get-child")
+    public ModelAndView getChild(ModelAndView mv) {
+//        int childNo = 0;
+//        List<childrenDTO> list = childService.getTaleList(1);
+//        Object[] taleList = list.stream().filter(i -> i.getCutDataDTOList().size()>3).toArray();
+//        System.out.println("taleList = " + taleList);
+//        System.out.println("동화 목록으로 가기!");
+//        mv.addObject("list", list);
+        mv.setViewName("children/get-child");
         return mv;
     }
 

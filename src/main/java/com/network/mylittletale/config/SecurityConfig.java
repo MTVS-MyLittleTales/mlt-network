@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("/**", "/member/**").permitAll()
                 .and()
                 .csrf().disable();
-
         http
                 .formLogin()
                 .loginPage("/member/login")

@@ -29,14 +29,20 @@
 
 <th:block layout:fragment="content">
 
-  <h2 align="center" style="margin: 50px">한 컷이 완성되었습니다!</h2>
+  <h2 align="center" style="margin: 50px">컷이 완성되었습니다!</h2>
 
-  <div style="display: flex; justify-content: center">
+<!--  <div style="display: flex; justify-content: center">-->
 
     <div class="text-center">
       <img id="resultImg" th:src="|@{/tale/img/}${imageName}|">
     </div>
-  </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 50px">
+      <a class="btn btn-primary" role="button" onclick="location.href='/tale/get-story'">다음 컷 만들러 가기</a>
+<!--      <a class="btn btn-primary" role="button" onclick="location.href='/tale/list'">동화 목록으로 가기</a>-->
+    </div>
+
+<!--  </div>-->
 
 </th:block>
 </html>
