@@ -1,23 +1,26 @@
 package com.network.mylittletale.tale.model.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 public class TaleDTO {
     private int taleNo;
-    private java.sql.Date createDate;
+    private java.sql.Date createdDate;
     private java.sql.Date lastViewDate;
     private String isDelete;
     private int childNo;
+    List<CutDataDTO> cutDataDTOList;
 
     public TaleDTO() {
     }
 
-    public TaleDTO(int taleNo, Date createDate, Date lastViewDate, String isDelete, int childNo) {
+    public TaleDTO(int taleNo, Date createdDate, Date lastViewDate, String isDelete, int childNo, List<CutDataDTO> cutDataDTOList) {
         this.taleNo = taleNo;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
         this.lastViewDate = lastViewDate;
         this.isDelete = isDelete;
         this.childNo = childNo;
+        this.cutDataDTOList = cutDataDTOList;
     }
 
     public int getTaleNo() {
@@ -28,12 +31,12 @@ public class TaleDTO {
         this.taleNo = taleNo;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Date getLastViewDate() {
@@ -60,14 +63,23 @@ public class TaleDTO {
         this.childNo = childNo;
     }
 
+    public List<CutDataDTO> getCutDataDTOList() {
+        return cutDataDTOList;
+    }
+
+    public void setCutDataDTOList(List<CutDataDTO> cutDataDTOList) {
+        this.cutDataDTOList = cutDataDTOList;
+    }
+
     @Override
     public String toString() {
         return "TaleDTO{" +
                 "taleNo=" + taleNo +
-                ", createDate=" + createDate +
+                ", createdDate=" + createdDate +
                 ", lastViewDate=" + lastViewDate +
                 ", isDelete='" + isDelete + '\'' +
                 ", childNo=" + childNo +
+                ", cutDataDTOList=" + cutDataDTOList +
                 '}';
     }
 }
