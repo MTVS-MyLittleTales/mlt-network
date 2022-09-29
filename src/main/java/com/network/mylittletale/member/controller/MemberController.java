@@ -9,9 +9,12 @@ import com.network.mylittletale.member.model.dto.MemberDTO;
 import com.network.mylittletale.member.model.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -98,6 +101,16 @@ public class MemberController {
 
         System.out.println("로그인 실패!");
         return "common/errors/error-login";
+    }
+
+    @GetMapping("/checklogin")
+    public String checkLogin(@AuthenticationPrincipal UserDetails user) {
+        if(user != null){
+            System.out.println("로그인 되어 있습니다.");
+        } else{
+            System.out.println("로그인 안되어 있습니다.");
+        }
+        return "member/content/checklogin";
     }
 
     @GetMapping("/update")
