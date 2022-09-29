@@ -41,6 +41,7 @@ public class MemberService {
         return result != null? true : false;
     }
 
+    @Transactional
     public void modifyMember(MemberDTO member) throws MemberModifyException {
         int result = mapper.updateMember(member);
 
@@ -48,7 +49,7 @@ public class MemberService {
             throw new MemberModifyException("회원 정보 수정에 실패하셨습니다.");
         }
     }
-
+    @Transactional
     public void removeMember(MemberDTO member) throws MemberRemoveException {
         int result = mapper.deleteMember(member);
 

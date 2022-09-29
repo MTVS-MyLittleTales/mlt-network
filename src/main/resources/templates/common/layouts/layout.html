@@ -40,8 +40,16 @@
   </style>
 
 </head>
-<body>
 
+<body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let message = [[${message}]];
+    if (message != null && message !== '') {
+        alert(message);
+    }
+    /*]]>*/
+</script>
 
 <div class="d-flex flex-column">
   <header th:replace="common/fragments/header :: headerFragment"></header>
