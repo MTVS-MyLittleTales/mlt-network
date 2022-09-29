@@ -15,7 +15,7 @@
   <h2 th:align="center" style="margin-top: 100px; margin-bottom: 50px">사진이 마음에 드시나요?</h2>
 
   <div class="text-center">
-    <img src="..." class="rounded" alt="...">
+    <img id="resultImg" th:src="|@{/tale/img/}${imageName}|">
   </div>
 
   <div style="display: flex; justify-content: center; margin-top: 50px" >

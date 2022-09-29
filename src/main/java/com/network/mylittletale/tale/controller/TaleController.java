@@ -75,6 +75,7 @@ public class TaleController {
     private int sequence;
     private int cutSequence = 0;
 
+    private final String pythonRootPath = "http://119.194.163.123:7777";
     private int taleSequence;
     private TaleService taleService;
     @Autowired
@@ -108,12 +109,13 @@ public class TaleController {
     }
     @PostMapping("getimage")
     @Transactional
-    public synchronized ModelAndView getdInputImage(ModelAndView mv, @RequestParam MultipartFile singFile, RedirectAttributes rttr, HttpServletResponse res, @AuthenticationPrincipal UserDetails user) throws IOException {
-        String imageData = Base64.getEncoder().encodeToString(singFile.getBytes());
+    public synchronized ModelAndView getdInputImage(ModelAndView mv, @RequestParam MultipartFile singleFile, RedirectAttributes rttr, HttpServletRequest request, @AuthenticationPrincipal UserDetails user) throws IOException {
+        System.out.println(singleFile);
+        String imageData = Base64.getEncoder().encodeToString(singleFile.getBytes());
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String url = "http://3.39.11.95:56832/getimage";
+        String url = pythonRootPath + "/getimage";
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("image", imageData);
@@ -162,9 +164,9 @@ public class TaleController {
             cutSequence += 1;
             if(cutSequence==5){
                 cutSequence = 0;
-                mv.setViewName("redirect:/tale/result3");
+                mv.setViewName("redirect:/tale/detail/"+taleSequence);
             }else{
-                mv.setViewName("redirect:/tale/result2");
+                mv.setViewName("redirect:/tale/final-img");
             }
 
             System.out.println("cutSequence2 = " + cutSequence);
@@ -180,8 +182,8 @@ public class TaleController {
     @PostMapping("gettext")
     public ModelAndView getInputText(ModelAndView mv, @RequestParam String content, HttpSession httpSession, RedirectAttributes rttr) {
         sequence = taleService.getCutNo();
-        String url = "http://3.39.11.95:56832/gettext";
-
+        String url = pythonRootPath + "/gettext";
+        System.out.println("url = " + url);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         MultiValueMap<String, String> text = new LinkedMultiValueMap<>();
@@ -214,7 +216,7 @@ public class TaleController {
         }
 
         rttr.addFlashAttribute("imageName", "result"+sequence+".png");
-        mv.setViewName("redirect:/tale/result");
+        mv.setViewName("redirect:/tale/select-img");
 
         return mv;
     }
@@ -264,10 +266,16 @@ public class TaleController {
 
 
     @GetMapping("/list")
-    public String goTaleList() {
-
+    public ModelAndView goTaleList(ModelAndView mv) {
+        int childNo = 0;
+        List<TaleDTO> list = taleService.getTaleList(1);
+        Object[] taleList = list.stream().filter(i -> i.getCutDataDTOList().size()>3).toArray();
+        System.out.println("taleList = " + taleList);
+        System.out.println("TaleList = " + taleList);
         System.out.println("동화 목록으로 가기!");
-        return("tale/list");
+        mv.addObject("taleList", taleList);
+        mv.setViewName("tale/list");
+        return mv;
     }
 
     @GetMapping("/final-img")
@@ -276,7 +284,6 @@ public class TaleController {
         System.out.println("최종 이미지 확인!");
         return("tale/final-img");
     }
-
 
     @GetMapping("temp")
     public ModelAndView tempPage(ModelAndView mv){
@@ -292,19 +299,36 @@ public class TaleController {
         return mv;
     }
 
-    @GetMapping("/detail")
-    public String goTaleDetail(ModelAndView mv) {
-        int taleNo = 1;
+    @GetMapping("/detail/{taleNo}")
+    public ModelAndView goTaleDetail(ModelAndView mv, @PathVariable("taleNo")int taleNo) {
         List<CutDataDTO> cutList = taleService.getTales(taleNo);
+
         System.out.println("cutList.get(0) = " + cutList.get(0));
 
-        mv.addObject("firstCut", cutList.get(0));
-        mv.addObject("secondCut", cutList.get(1));
-        mv.addObject("thirdCut", cutList.get(2));
-        mv.addObject("fourthCut", cutList.get(3));
+        mv.addObject("firstCutImgName", cutList.get(0).getImgName());
+        mv.addObject("secondCutImgName", cutList.get(1).getImgName());
+        mv.addObject("thirdCutImgName", cutList.get(2).getImgName());
+        mv.addObject("fourthCutImgName", cutList.get(3).getImgName());
+        mv.addObject("firstCutContent", cutList.get(0).getInputSentence());
+        mv.addObject("secondCutContent", cutList.get(1).getInputSentence());
+        mv.addObject("thirdCutContent", cutList.get(2).getInputSentence());
+        mv.addObject("fourthCutContent", cutList.get(3).getInputSentence());
         System.out.println("4컷 동화 보러 가기");
-
-        return "tale/detail";
+        mv.setViewName("tale/detail");
+        return mv;
     }
+
+//    @GetMapping(value = "thumnail/{taleNo}", produces = MediaType.IMAGE_PNG_VALUE)
+//    @ResponseBody
+//    public byte[] getThumnail (@PathVariable("taleNo") int taleNo) throws IOException {
+//        List<CutDataDTO> cutDataDTOList = taleService.getTales(1);
+//        String fileName = cutDataDTOList.get(0).getImgName();
+//        File file = new File("\\public\\"+fileName);
+//
+//        byte[] byteImage = Files.readAllBytes(file.toPath());
+//        return byteImage;
+//    }
+
+
 }
 

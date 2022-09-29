@@ -6,12 +6,19 @@
     <resultMap id="cutData" type="com.network.mylittletale.tale.model.dto.CutDataDTO">
         <id property="cutNo" column="CUT_NO"/>
         <result property="inputSentence" column="INPUT_SENTENCE"/>
-        <result property="taleNo" column="TALE_NO"/>
         <result property="cutSequence" column="CUT_SEQUENCE"/>
         <result property="imgName" column="IMG_NAME"/>
         <result property="memberYN" column="MEMBER_YN"/>
     </resultMap>
+    <resultMap id="tale" type="com.network.mylittletale.tale.model.dto.TaleDTO">
+        <id property="taleNo" column="TALE_NO"/>
+        <result property="createdDate" column="CREATED_DATE"/>
+        <result property="lastViewDate" column="LAST_VIEWED_DATE"/>
+        <result property="isDelete" column="IS_DELETE"/>
+        <result property="childNo" column="CHILD_NO"/>
 
+        <collection property="cutDataDTOList" resultMap="cutData"/>
+    </resultMap>
     <select id="getCutNo" resultType="int">
         SELECT
                SEQ_CUT_NO.NEXTVAL
@@ -81,5 +88,26 @@
         , ${childNo}
         )
     </insert>
+
+    <select id="getTaleList" resultMap="tale">
+        SELECT
+               A.TALE_NO
+             , A.CREATED_DATE
+             , A.LAST_VIEWED_DATE
+             , A.IS_DELETE
+             , A.CHILD_NO
+             , B.CUT_NO
+             , B.INPUT_SENTENCE
+             , B.CUT_SEQUENCE
+             , B.IMG_NAME
+             , B.MEMBER_YN
+          FROM TBL_CREATED_TALE A
+          JOIN TBL_CUT_DATA B ON(A.TALE_NO = B.TALE_NO)
+         WHERE A.CHILD_NO = #{childNo}
+    </select>
+
+
+
+
 
 </mapper>

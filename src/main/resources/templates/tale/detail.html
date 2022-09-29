@@ -19,12 +19,10 @@
     <div class="row featurette">
       <div class="col-md-7">
 <!--        <h2 class="featurette-heading"> 1컷 제목 <span class="text-muted"> 1컷 부제 </span></h2>-->
-        <p class="lead">1컷 내용</p>
-
+        <p style="font-size: 80px" th:text="${firstCutContent}" ></p>
       </div>
       <div class="col-md-5">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">1컷 사진</text></svg>
-
+          <img th:src="|@{/tale/img/}${firstCutImgName}|" size>
       </div>
     </div>
 
@@ -33,10 +31,10 @@
     <div class="row featurette">
       <div class="col-md-7 order-md-2">
 <!--        <h2 class="featurette-heading">2컷 제목 <span class="text-muted"> 2컷 부제 </span></h2>-->
-        <p class="lead">2컷 내용</p>
+        <p style="font-size: 80px" th:text="${secondCutContent}"></p>
       </div>
       <div class="col-md-5 order-md-1">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">2컷 사진</text></svg>
+          <img th:src="|@{/tale/img/}${secondCutImgName}|">
 <!--            <div th:text="${ firstCut.imgName }"></div>-->
       </div>
     </div>+
@@ -46,10 +44,10 @@
     <div class="row featurette">
       <div class="col-md-7">
 <!--        <h2 class="featurette-heading"> 3컷 제목 <span class="text-muted"> 3컷 부제 </span></h2>-->
-        <p class="lead">3컷 내용</p>
+          <p style="font-size: 80px" th:text="${thirdCutContent}"></p>
       </div>
       <div class="col-md-5">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">3컷 사진</text></svg>
+          <img th:src="|@{/tale/img/}${thirdCutImgName}|">
 
       </div>
     </div>
@@ -59,11 +57,10 @@
     <div class="row featurette">
       <div class="col-md-7 order-md-2">
 <!--        <h2 class="featurette-heading">4컷 제목 <span class="text-muted"> 4컷 부제 </span></h2>-->
-        <p class="lead">4컷 내용</p>
+          <p style="font-size: 80px" th:text="${fourthCutContent}"></p>
       </div>
       <div class="col-md-5 order-md-1">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">4컷 사진</text></svg>
-
+          <img th:src="|@{/tale/img/}${fourthCutImgName}|">
       </div>
     </div>
 

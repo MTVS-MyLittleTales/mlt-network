@@ -1,6 +1,7 @@
 package com.network.mylittletale.tale.model.service;
 
 import com.network.mylittletale.tale.model.dto.CutDataDTO;
+import com.network.mylittletale.tale.model.dto.TaleDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -23,5 +24,7 @@ public interface TaleService {
     int insertTale(Map<String, Integer> childNo);
 
     int getTaleSequence();
+
+    List<TaleDTO> getTaleList(int childNo);
 }
 

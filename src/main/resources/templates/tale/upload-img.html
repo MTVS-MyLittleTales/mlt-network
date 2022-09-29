@@ -19,10 +19,14 @@
 <!--    <img src="..." class="rounded" alt="...">-->
 <!--  </div>-->
 
-  <form>
+
     <div style="display: flex; justify-content: center">
       <div class="mb-3">
-        <input type="file" class="form-control" aria-label="file example" required>
+        <form method="post" action="/tale/getimage" enctype="multipart/form-data">
+          <input type="file" name="singleFile">
+          <div style="display: flex; justify-content: center">
+            <button style="margin-top: 50px" class="btn btn-primary" type="submit">전송</button>
+          </div>
         <div class="invalid-feedback">Example invalid form file feedback</div>
       </div>
 
@@ -32,9 +36,7 @@
 
     </div>
 
-    <div style="display: flex; justify-content: center">
-      <a style="margin-top: 50px" class="btn btn-primary" href="#" role="button" onclick="location.href='/tale/final-img'">다음</a>
-    </div>
+
   </form>
 
 </th:block>

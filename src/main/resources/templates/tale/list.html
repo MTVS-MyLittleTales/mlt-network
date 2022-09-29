@@ -9,17 +9,15 @@
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-                <div th:each="num : ${#numbers.sequence(1,6)}">
+                <div th:each="tale : ${taleList}">
                     <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">동화 이미지</text></svg>
-
+                        <img th:src="|@{/tale/img/}${tale.cutDataDTOList[0].imgName}|">
                         <div class="card-body">
-                            <p class="card-text">신데렐라는 어려서 부모님을 잃고요...</p>
+                            <p class="card-text" th:text="${tale.cutDataDTOList[0].inputSentence}"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='/tale/detail'">동화보러가기</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" th:onclick="|location.href='@{/tale/detail/{taleNo}(taleNo=${tale.taleNo})}'|">동화보러가기</button>
                                 </div>
-
                             </div>
                         </div>
                     </div>
