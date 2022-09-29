@@ -52,14 +52,8 @@ public class ChildrenDTO {
         this.memberNo = memberNo;
     }
 
-    public String getChildGender() {
-        String transResult;
-        switch (this.childGender) {
-            case 'M': transResult = "남자"; break;
-            case 'G': transResult = "여자"; break;
-            default: transResult = "오류"; break;
-        }
-        return transResult;
+    public char getChildGender() {
+        return this.childGender;
     }
 
     public void setChildGender(char childGender) {
