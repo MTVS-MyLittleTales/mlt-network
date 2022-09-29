@@ -19,18 +19,18 @@
           <th scope="col" >자녀명</th>
           <th scope="col" >생일</th>
           <th scope="col">성별</th>
-          <th scope="col">상세</th>
+          <th scope="col">삭제</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="children : ${childrenList}">
-          <th scope="row" th:text="${children.childNo}"/>
+          <th th:id="|childrenId${children.childNo}|" scope="row" th:text="${children.childNo}"/>
           <td th:text="${children.childName}"/>
           <td th:text="${children.childBirth}"/>
           <td th:text="${children.childGender}"/>
           <td>
-            <button class="btn btn-outline-primary" th:onclick="|location.href='@{./update(childNo=${children.childNo})}'|">수정</button>
-            <button class="btn btn-outline-primary" th:onclick="|location.href='@{./delete(childNo=${children.childNo})}'|">삭제</button>
+<!--            <button class="btn btn-outline-primary" th:onclick="|location.href='@{./delete(childNo=${children.childNo})}'|">삭제</button>-->
+            <button th:childNo="${children.childNo}"  id="deleteChildren" class="btn btn-outline-primary">삭제</button>
           </td>
 
         </tr>

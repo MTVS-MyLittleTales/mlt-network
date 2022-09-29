@@ -6,31 +6,36 @@
 
     <select id="hasChildren" resultType="ChildrenDTO">
         SELECT A.MEMBER_NO
-          FROM TBL_CHILDREN A
-         WHERE A.MEMBER_NO = ${memberNo}
+        FROM TBL_CHILDREN A
+        WHERE A.MEMBER_NO = ${memberNo}
+          AND ROWNUM = 1
     </select>
 
     <insert id="registChildren" parameterType="ChildrenDTO">
         INSERT
-          INTO TBL_CHILDREN
-        (
-          CHILD_NO, CHILD_NAME, CHILD_BIRTH, MEMBER_NO, CHILD_GENDER
-        )
-        VALUES
-        (
-          SEQ_CHILD_NO.NEXTVAL, #{childName}, #{childBirth}, ${memberNo}, #{childGender}
-        )
+        INTO TBL_CHILDREN
+        (CHILD_NO, CHILD_NAME, CHILD_BIRTH, MEMBER_NO, CHILD_GENDER)
+        VALUES (SEQ_CHILD_NO.NEXTVAL, #{childName}, #{childBirth}, ${memberNo}, #{childGender})
     </insert>
 
     <select id="findChildrenByMemberNo" resultType="ChildrenDTO">
-        SELECT
-               A.CHILD_NO
+        SELECT A.CHILD_NO
              , A.CHILD_NAME
              , A.CHILD_BIRTH
              , A.MEMBER_NO
              , A.CHILD_GENDER
-         FROM  TBL_CHILDREN A
+        FROM TBL_CHILDREN A
         WHERE A.MEMBER_NO = ${loginedMemberNo}
+        ORDER BY A.CHILD_NO ASC
+    </select>
+    <select id="findChildrenByChildren" resultType="ChildrenDTO">
+        SELECT A.CHILD_NO
+             , A.CHILD_NAME
+             , A.CHILD_BIRTH
+             , A.MEMBER_NO
+             , A.CHILD_GENDER
+        FROM TBL_CHILDREN A
+        WHERE A.CHILD_NO = ${childNo}
         ORDER BY A.CHILD_NO ASC
     </select>
 </mapper>
