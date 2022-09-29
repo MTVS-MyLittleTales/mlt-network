@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("children")
@@ -17,28 +20,52 @@ public class ChildrenController {
 
     private ChildrenService childrenService;
 
-    public ChildrenController(ChildrenService childrenService) {
+    @Autowired
+    public ChildrenController( ChildrenService childrenService) {
         this.childrenService = childrenService;
     }
 
     @GetMapping("regist")
     public ModelAndView goChildrenLocation(ModelAndView mv) {
 
-        mv.setViewName("/children/regist");
+        mv.setViewName("children/regist");
 
         return mv;
     }
 
     @PostMapping("regist")
-    public ModelAndView registChild(ModelAndView mv, ChildrenDTO children, Authentication authentication){
-        MemberDTO loginedmember = (MemberDTO) authentication.getPrincipal();
-        children.setMemberNo(loginedmember.getMemberNo());
+    public ModelAndView registChild(ModelAndView mv, ChildrenDTO children, Authentication authentication) {
+        MemberDTO loginedMember = (MemberDTO) authentication.getPrincipal();
+        children.setMemberNo(loginedMember.getMemberNo());
 //        System.out.println("children = " + children);
 
         System.out.println("children = " + children);
         childrenService.registChildren(children);
 
         mv.setViewName("redirect:/");
+        return mv;
+    }
+
+    @GetMapping("list")
+    public ModelAndView findChildrenByMemberNo(ModelAndView mv, Authentication authentication) {
+
+        MemberDTO loginedMember = (MemberDTO) authentication.getPrincipal();
+
+        List<ChildrenDTO> childrenList =  childrenService.findChildrenByMemberNo(loginedMember.getMemberNo());
+        System.out.println("childrenList = " + childrenList);
+        mv.addObject("childrenList", childrenList);
+
+        mv.setViewName("children/children-list");
+
+        return mv;
+    }
+
+    @GetMapping("update")
+    public ModelAndView updateLocation(ModelAndView mv, @RequestParam(name="childNo") int childNo) {
+        System.out.println("memberNo = " + childNo);
+
+
+        mv.setViewName("children/update");
         return mv;
     }
 }

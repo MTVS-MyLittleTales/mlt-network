@@ -21,4 +21,16 @@
           SEQ_CHILD_NO.NEXTVAL, #{childName}, #{childBirth}, ${memberNo}, #{childGender}
         )
     </insert>
+
+    <select id="findChildrenByMemberNo" resultType="ChildrenDTO">
+        SELECT
+               A.CHILD_NO
+             , A.CHILD_NAME
+             , A.CHILD_BIRTH
+             , A.MEMBER_NO
+             , A.CHILD_GENDER
+         FROM  TBL_CHILDREN A
+        WHERE A.MEMBER_NO = ${loginedMemberNo}
+        ORDER BY A.CHILD_NO ASC
+    </select>
 </mapper>

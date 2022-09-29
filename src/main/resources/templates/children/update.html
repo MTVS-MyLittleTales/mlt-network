@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/layout}"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<th:block layout:fragment="content">
+
+  <main>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+
+        <h2 class="text-center text-dark mt-5">아이 정보 수정</h2>
+        <div class="text-center mb-5 text-dark">my little tales</div>
+        <div class="card my-5">
+
+          <form class="card-body cardbody-color p-lg-5" id="updateForm" th:action="@{/children/update}" method="post">
+
+            <div class="input-group mb-3">
+              <span class="input-group-text col-3" id="childrenNameText">수정 자녀 이름</span>
+              <input type="text" class="form-control" id="childName" name="childName"
+                     placeholder="변경하실 자녀이름을 적어주세요.">
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text col-3" id="childBirthText">수정할 생년월일</span>
+              <input type="date" class="form-control" id="childBirth" name="childBirth"/>
+            </div>
+
+            <div class="input-group mb-3">
+              <span class="input-group-text col-3" id="chichildGenderldGenderText">성별</span>
+              <select class="form-select" name="childGender" aria-label="select child gender">
+                <option selected hidden>변경할 성별을 선택해 주세요</option>
+                <option value="M">남자</option>
+                <option value="G">여자</option>
+
+              </select>
+            </div>
+
+            <div class="text-center mb-5">
+              <button type="button" class="btn btn-dark" id="goMain" th:onclick="|location.href='@{/child/list}'|">취소하기</button>
+              <button type="submit" class="btn btn-primary" id="childrenUpdate">수정하기</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="/js/event.js"></script>
+  </main>
+</th:block>
