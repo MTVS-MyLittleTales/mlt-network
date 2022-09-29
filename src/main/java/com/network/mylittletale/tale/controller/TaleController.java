@@ -40,6 +40,8 @@
 package com.network.mylittletale.tale.controller;
 
 
+import com.network.mylittletale.children.model.dto.ChildrenDTO;
+import com.network.mylittletale.member.model.dto.MemberDTO;
 import com.network.mylittletale.tale.model.dto.CutDataDTO;
 import com.network.mylittletale.tale.model.dto.TaleDTO;
 import com.network.mylittletale.tale.model.service.TaleService;
@@ -47,6 +49,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -104,13 +107,20 @@ public class TaleController {
 
     @GetMapping("gettext")
     public ModelAndView testPage(ModelAndView mv){
+
         mv.setViewName("member/tale/gettext");
         return mv;
     }
     @PostMapping("getimage")
     @Transactional
-    public synchronized ModelAndView getdInputImage(ModelAndView mv, @RequestParam MultipartFile singleFile, RedirectAttributes rttr, HttpServletRequest request, @AuthenticationPrincipal UserDetails user) throws IOException {
-        System.out.println(singleFile);
+    public synchronized ModelAndView getdInputImage(ModelAndView mv, @RequestParam MultipartFile singleFile, RedirectAttributes rttr,HttpServletRequest request, @AuthenticationPrincipal UserDetails user, HttpServletResponse response) throws IOException {
+        Cookie[] cookies = request.getCookies();
+        String childNo = "";
+        for(int i=0; i<cookies.length; i++){
+            if("childNo".equals(cookies[i].getName())){
+                childNo =  cookies[i].getValue();
+            }
+        }
         String imageData = Base64.getEncoder().encodeToString(singleFile.getBytes());
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -142,10 +152,11 @@ public class TaleController {
             //동화 생성에 필요한 아이번호, 동화번호 값으로 동화 만들기\
 
             if(cutSequence==0) {
+
                 taleSequence = taleService.getTaleSequence();
                 Map<String, Integer> tale = new HashMap<>();
                 tale.put("taleNo", taleSequence);
-                tale.put("childNo", 1);
+                tale.put("childNo", Integer.parseInt(childNo));
                 taleService.insertTale(tale);
                 cutSequence = 1;
             }
@@ -165,6 +176,11 @@ public class TaleController {
             if(cutSequence==5){
                 cutSequence = 0;
                 mv.setViewName("redirect:/tale/detail/"+taleSequence);
+                for(int i=0; i<cookies.length; i++){
+                    cookies[i].setMaxAge(0);
+                    response.addCookie(cookies[i]);
+                }
+
             }else{
                 mv.setViewName("redirect:/tale/final-img");
             }
@@ -180,10 +196,10 @@ public class TaleController {
     }
 
     @PostMapping("gettext")
-    public ModelAndView getInputText(ModelAndView mv, @RequestParam String content, HttpSession httpSession, RedirectAttributes rttr) {
+    public ModelAndView getInputText(ModelAndView mv, @RequestParam String content, RedirectAttributes rttr) {
         sequence = taleService.getCutNo();
         String url = pythonRootPath + "/gettext";
-        System.out.println("url = " + url);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         MultiValueMap<String, String> text = new LinkedMultiValueMap<>();
@@ -244,9 +260,10 @@ public class TaleController {
     }
 
     @GetMapping("/get-story")
-    public String getStory() {
-
-        System.out.println("문장을 받아라!");
+    public String getStory(@RequestParam(required = false) String childNo, HttpServletResponse response) {
+        System.out.println("childNo = " + childNo);
+        Cookie cookie = new Cookie("childNo", childNo);
+        response.addCookie(cookie);
         return("tale/get-story");
     }
 
@@ -318,23 +335,17 @@ public class TaleController {
     }
 
     @GetMapping("/get-child")
-    public ModelAndView getChildInfo(ModelAndView mv){
-        mv.setViewName("tale/get-child");
+    public ModelAndView getChildInfo(ModelAndView mv, Authentication authentication){
+        MemberDTO member = (MemberDTO) authentication.getPrincipal();
+        List<ChildrenDTO> childList = taleService.getChildList(member.getMemberNo());
+        System.out.println("childList = " + childList);
+        mv.addObject("childList", childList);
+        mv.setViewName("children/get-child");
         return mv;
     }
 
 
 
-//    @GetMapping(value = "thumnail/{taleNo}", produces = MediaType.IMAGE_PNG_VALUE)
-//    @ResponseBody
-//    public byte[] getThumnail (@PathVariable("taleNo") int taleNo) throws IOException {
-//        List<CutDataDTO> cutDataDTOList = taleService.getTales(1);
-//        String fileName = cutDataDTOList.get(0).getImgName();
-//        File file = new File("\\public\\"+fileName);
-//
-//        byte[] byteImage = Files.readAllBytes(file.toPath());
-//        return byteImage;
-//    }
 
 
 }

@@ -21,7 +21,7 @@
           <h5 class="card-title">자녀</h5>
           <p class="card-text" th:text="${child.childName}">이름 : </p>
           <p class="card-text" th:text="${child.childBirth}">생년월일 : </p>
-          <a href="#" class="btn btn-primary">너가 주인공 해라</a>
+          <a th:href="@{/tale/get-story(childNo = ${child.childNo})}" class="btn btn-primary">선택</a>
         </div>
       </div>
 

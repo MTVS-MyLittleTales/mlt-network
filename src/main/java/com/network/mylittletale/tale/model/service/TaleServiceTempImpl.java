@@ -5,6 +5,7 @@
 
 package com.network.mylittletale.tale.model.service;
 
+import com.network.mylittletale.children.model.dto.ChildrenDTO;
 import com.network.mylittletale.tale.model.dao.TaleMapper;
 import com.network.mylittletale.tale.model.dto.CutDataDTO;
 import com.network.mylittletale.tale.model.dto.TaleDTO;
@@ -67,5 +68,10 @@ public class TaleServiceTempImpl implements TaleService {
     @Override
     public List<TaleDTO> getTaleList(int childNo) {
         return mapper.getTaleList(childNo);
+    }
+
+    @Override
+    public List<ChildrenDTO> getChildList(int memberNo) {
+        return mapper.getChildList(memberNo);
     }
 }
