@@ -62,4 +62,9 @@ public class TaleServiceTempImpl implements TaleService {
     public int getTaleSequence() {
         return mapper.getTaleSequence();
     }
+
+    @Override
+    public List<Integer> getTaleList(int childNo) {
+        return mapper.getTaleList(childNo);
+    }
 }

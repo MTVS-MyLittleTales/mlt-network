@@ -21,4 +21,6 @@ public interface TaleMapper {
     int insertTale(Map<String, Integer> childNo);
 
     int getTaleSequence();
+
+    List<Integer> getTaleList(int childNo);
 }
