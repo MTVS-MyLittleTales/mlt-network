@@ -262,16 +262,16 @@ public class TaleController {
     }
 
     @GetMapping("result3")
-    public ModelAndView resultPage(ModelAndView mv){
+    public ModelAndView resultPage(ModelAndView mv) {
         mv.setViewName("member/tale/result3");
         return mv;
-
+    }
 
     @GetMapping("/detail")
     public String goTaleDetail() {
 
         System.out.println("4컷 동화 보러 가기");
-        return("tale/detail");
+        return "tale/detail";
 
     }
 }

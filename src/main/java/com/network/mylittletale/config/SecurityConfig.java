@@ -52,9 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .mvcMatchers( "/tale/**").hasAnyAuthority("ROLE_MEMBER", "ROLE_ADMIN")
                     .mvcMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
-                    .mvcMatchers("/**", "/member/**").permitAll()
-                .and()
-                    .csrf().disable();
+                    .mvcMatchers("/**", "/member/**").permitAll();
+//                .and()
+//                    .csrf().disable();
 
         http
                     .formLogin()
