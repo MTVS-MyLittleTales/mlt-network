@@ -68,20 +68,9 @@ public class ChildrenController {
         childrenService.deleteChildren(childrenNo);
 
         rttr.addFlashAttribute("message", "삭제가 완료되었습니다.");
-        
-    @GetMapping("/get-child")
-    public ModelAndView getChild(ModelAndView mv) {
-//        int childNo = 0;
-//        List<childrenDTO> list = childService.getTaleList(1);
-//        Object[] taleList = list.stream().filter(i -> i.getCutDataDTOList().size()>3).toArray();
-//        System.out.println("taleList = " + taleList);
-//        System.out.println("동화 목록으로 가기!");
-//        mv.addObject("list", list);
-        mv.setViewName("children/get-child");
-        return mv;
-    }
-
         mv.setViewName("redirect:/children/list");
         return mv;
     }
+
+
 }
