@@ -19,6 +19,15 @@
 
         <collection property="cutDataDTOList" resultMap="cutData"/>
     </resultMap>
+    <resultMap id="children" type="com.network.mylittletale.children.model.dto.ChildrenDTO">
+        <id property="childNo" column="CHILD_NO"/>
+        <result property="childName" column="CHILD_NAME"/>
+        <result property="childBirth" column="CHILD_BIRTH"/>
+        <result property="memberNo" column="MEMBER_NO"/>
+        <result property="childGender" column="CHILD_GENDER"/>
+    </resultMap>
+
+
     <select id="getCutNo" resultType="int">
         SELECT
                SEQ_CUT_NO.NEXTVAL
@@ -104,8 +113,20 @@
           FROM TBL_CREATED_TALE A
           JOIN TBL_CUT_DATA B ON(A.TALE_NO = B.TALE_NO)
          WHERE A.CHILD_NO = #{childNo}
+         ORDER BY A.TALE_NO
     </select>
 
+    <select id="getChildList" resultMap="children">
+        SELECT
+               A.CHILD_NO
+             , A.CHILD_NAME
+             , A.CHILD_BIRTH
+             , A.MEMBER_NO
+             , A.CHILD_GENDER
+          FROM TBL_CHILDREN A
+         WHERE A.MEMBER_NO = #{memberNo}
+         ORDER BY A.CHILD_BIRTH
+    </select>
 
 
 
