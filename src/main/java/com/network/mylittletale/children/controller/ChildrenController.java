@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ChildrenController {
     private ChildrenService childrenService;
 
     @Autowired
-    public ChildrenController( ChildrenService childrenService) {
+    public ChildrenController(ChildrenService childrenService) {
         this.childrenService = childrenService;
     }
 
@@ -51,7 +52,7 @@ public class ChildrenController {
 
         MemberDTO loginedMember = (MemberDTO) authentication.getPrincipal();
 
-        List<ChildrenDTO> childrenList =  childrenService.findChildrenByMemberNo(loginedMember.getMemberNo());
+        List<ChildrenDTO> childrenList = childrenService.findChildrenByMemberNo(loginedMember.getMemberNo());
         System.out.println("childrenList = " + childrenList);
         mv.addObject("childrenList", childrenList);
 
@@ -60,15 +61,5 @@ public class ChildrenController {
         return mv;
     }
 
-    @GetMapping("update")
-    public ModelAndView updateLocation(ModelAndView mv, @RequestParam(name="childNo") int childNo, Authentication authentication) {
-        System.out.println("memberNo = " + childNo);
-        MemberDTO loginedMember = (MemberDTO) authentication.getPrincipal();
 
-        childrenService.findChildrenByMemberNo(loginedMember.getMemberNo());
-
-
-        mv.setViewName("children/update");
-        return mv;
-    }
 }

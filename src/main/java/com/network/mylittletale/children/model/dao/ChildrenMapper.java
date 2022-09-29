@@ -13,4 +13,8 @@ public interface ChildrenMapper {
     int registChildren(ChildrenDTO children);
 
     List<ChildrenDTO> findChildrenByMemberNo(int loginedMemberNo);
+
+    ChildrenDTO findChildrenByChildren(int childNo);
+
+    int updateChildren(ChildrenDTO updateChildren);
 }
