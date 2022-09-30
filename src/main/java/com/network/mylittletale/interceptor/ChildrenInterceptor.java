@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
@@ -26,7 +27,6 @@ public class ChildrenInterceptor implements HandlerInterceptor {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         MemberDTO LoginedMember = (MemberDTO) authentication.getPrincipal();
         boolean hasChildren =  childrenService.hasChildren(LoginedMember.getMemberNo());
-
         if(hasChildren){
             return true;
         }
