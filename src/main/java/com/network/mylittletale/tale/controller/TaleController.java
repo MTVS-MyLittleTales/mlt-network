@@ -172,6 +172,8 @@ public class TaleController {
             System.out.println("cutDataDTO = " + cutDataDTO);
             taleService.insertCutData(cutDataDTO);
             cutSequence = taleService.getCutSequence(taleSequence);
+            rttr.addFlashAttribute("imageSequence", cutSequence);
+            rttr.addFlashAttribute("imageName", "result" + sequence + ".png");
             cutSequence += 1;
             if(cutSequence==5){
                 cutSequence = 0;
@@ -184,10 +186,6 @@ public class TaleController {
             }else{
                 mv.setViewName("redirect:/tale/final-img");
             }
-
-            System.out.println("cutSequence2 = " + cutSequence);
-            rttr.addFlashAttribute("imageName", "result" + sequence + ".png");
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -283,12 +281,14 @@ public class TaleController {
 
 
     @GetMapping("/list")
-    public ModelAndView goTaleList(ModelAndView mv) {
-        int childNo = 0;
-        List<TaleDTO> list = taleService.getTaleList(1);
+    public ModelAndView goTaleList(ModelAndView mv, HttpServletRequest request, Authentication authentication) {
+        MemberDTO memberDTO = (MemberDTO) authentication.getPrincipal();
+        List<TaleDTO> list = taleService.getTaleList(memberDTO.getMemberNo());
         Object[] taleList = list.stream().filter(i -> i.getCutDataDTOList().size()>3).toArray();
-        System.out.println("taleList = " + taleList);
-        System.out.println("동화 목록으로 가기!");
+        if(taleList.length<=0){
+            mv.setViewName("tale/result-message");
+            return mv;
+        }
         mv.addObject("taleList", taleList);
         mv.setViewName("tale/list");
         return mv;

@@ -28,11 +28,10 @@
 </head>
 
 <th:block layout:fragment="content">
-
+  <p align="center" class="h1" > <span >순서 : [</span> <span th:text="${imageSequence}"></span> ]</p>
   <h2 align="center" style="margin: 50px">컷이 완성되었습니다!</h2>
 
 <!--  <div style="display: flex; justify-content: center">-->
-
     <div class="text-center">
       <img id="resultImg" th:src="|@{/tale/img/}${imageName}|">
     </div>

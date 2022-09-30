@@ -112,7 +112,10 @@
              , B.MEMBER_YN
           FROM TBL_CREATED_TALE A
           JOIN TBL_CUT_DATA B ON(A.TALE_NO = B.TALE_NO)
-         WHERE A.CHILD_NO = #{childNo}
+         WHERE A.CHILD_NO IN (SELECT
+                                     CHILD_NO
+                                FROM TBL_CHILDREN
+                               WHERE MEMBER_NO = ${memberNo})
          ORDER BY A.TALE_NO
     </select>
 

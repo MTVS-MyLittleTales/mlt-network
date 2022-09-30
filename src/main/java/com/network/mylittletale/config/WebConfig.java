@@ -2,6 +2,7 @@ package com.network.mylittletale.config;
 
 import com.network.mylittletale.children.model.service.ChildrenService;
 import com.network.mylittletale.interceptor.ChildrenInterceptor;
+import com.network.mylittletale.interceptor.CreatedTaleIntercepter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -30,5 +31,12 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ChildrenInterceptor(childrenService))
                     .addPathPatterns("/tale/**");
+
+        registry.addInterceptor(new CreatedTaleIntercepter()).addPathPatterns("/tale/select-img");
+
+        registry.addInterceptor(new CreatedTaleIntercepter()).addPathPatterns("/tale/upload-img");
+
+        registry.addInterceptor(new CreatedTaleIntercepter()).addPathPatterns("/tale/final-img");
+
     }
 }
