@@ -27,7 +27,10 @@
           <th scope="row" th:text="${children.childNo}"/>
           <td th:text="${children.childName}"/>
           <td th:text="${children.childBirth}"/>
-          <td th:text="${children.childGender}"/>
+          <th:block th:switch="${children.childGender}">
+          <td th:case="M">남자</td>
+          <td th:case="G">여자</td>
+          </th:block>
           <td>
             <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
               삭제
